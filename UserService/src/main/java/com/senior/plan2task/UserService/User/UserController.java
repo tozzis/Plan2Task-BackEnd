@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
     
     @Autowired
@@ -51,15 +53,19 @@ public class UserController {
             responseData.put("Plan2Task", token);
             return new ResponseEntity<>(responseData, HttpStatus.OK);
         }else{
-            User fb_create = new User(null, facebookAccount.getEmail(), facebookAccount.getFirstName(), facebookAccount.getLastName(), facebookAccount.getGender(), null, facebookAccount.getPicture().getData().getUrl());
-            userService.createUser(fb_create);
-            User fb_sign = userService.getUserByEmail(facebookAccount.getEmail());
-            if (fb_sign != null) {
-                    String token = tokenAuthenticationService.createTokenUser(fb_sign);
-                    responseData.put("Plan2Task", token);
-                    return new ResponseEntity<>(responseData, HttpStatus.OK);
-            } else {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "มีบางอย่างผิดพลาด !!!");
+            if(facebookAccount.getEmail()==null){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "email not found !!!");
+            }else{
+                User fb_create = new User(null, facebookAccount.getEmail(), facebookAccount.getFirstName(), facebookAccount.getLastName(), facebookAccount.getGender(), null, facebookAccount.getPicture().getData().getUrl());
+                userService.createUser(fb_create);
+                User fb_sign = userService.getUserByEmail(facebookAccount.getEmail());
+                if (fb_sign != null) {
+                        String token = tokenAuthenticationService.createTokenUser(fb_sign);
+                        responseData.put("Plan2Task", token);
+                        return new ResponseEntity<>(responseData, HttpStatus.OK);
+                } else {
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "มีบางอย่างผิดพลาด !!!");
+                }
             }
         }
     }
