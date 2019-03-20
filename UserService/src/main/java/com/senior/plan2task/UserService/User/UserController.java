@@ -73,6 +73,12 @@ public class UserController {
         }
     }
     
+    @PostMapping("/user/id")
+    public ResponseEntity<User> getUserById(@RequestBody Map<String, String> userId) {
+        User user = userService.getUserById(userId.get("id"));
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+    
     @PostMapping("/user/email")
     public ResponseEntity<User> getUserByEmail(@RequestBody Map<String, String> userEmail) {
         User user = userService.getUserByEmail(userEmail.get("email"));
