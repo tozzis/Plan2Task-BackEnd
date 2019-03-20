@@ -29,12 +29,6 @@ public class UserController {
     
     @Autowired
     private TokenAuthenticationService tokenAuthenticationService;
-
-    @GetMapping("/users")
-    public ResponseEntity<List<User>> findAllUsers() {
-        List<User> user = userService.findAllUsers();
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
     
     @GetMapping("/user")
     public ResponseEntity<User> getUser(HttpServletRequest request) {
