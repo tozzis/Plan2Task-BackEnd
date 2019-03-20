@@ -4,7 +4,6 @@ import com.senior.plan2task.UserService.Facebook.AuthenFacebookAdapter;
 import com.senior.plan2task.UserService.Facebook.FacebookAccount;
 import com.senior.plan2task.UserService.Filter.TokenAuthenticationService;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
