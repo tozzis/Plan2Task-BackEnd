@@ -8,10 +8,10 @@
 		<version>2.1.3.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.senior.plan2task.</groupId>
-	<artifactId>MoodService</artifactId>
+	<groupId>com.senior.plan2task</groupId>
+	<artifactId>FriendService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>MoodService</name>
+	<name>FriendService</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
