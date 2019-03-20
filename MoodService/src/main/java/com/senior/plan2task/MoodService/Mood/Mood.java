@@ -2,6 +2,8 @@ package com.senior.plan2task.MoodService.Mood;
 
 import java.util.Date;
 
+import com.senior.plan2task.MoodService.User.User;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,6 +16,8 @@ public class Mood {
     private String moodName;
 
     private Date moodDate;
+
+    private User user;
 
     public Mood() {
     }
