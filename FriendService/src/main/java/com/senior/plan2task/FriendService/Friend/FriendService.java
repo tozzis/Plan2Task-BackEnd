@@ -19,6 +19,10 @@ public class FriendService {
         return friendRepository.findById(id).get();
     }
     
+    public Friend getFriendByUserIdAndFriendId(String userId, String friendId){
+        return friendRepository.findByUserIdAndFriendId(userId, friendId);
+    }
+    
     public void createFriend(Friend friend) {
         friendRepository.save(friend);
     }
