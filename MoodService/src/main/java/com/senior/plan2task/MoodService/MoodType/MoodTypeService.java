@@ -20,7 +20,10 @@ public class MoodTypeService {
     // public MoodType getMoodTypeImageByMoodId(String moodId) {
     //     return moodTypeRepository.findMoodTypeImageByMoodId(moodId);
     // }
+    // public MoodType getMoodTypeImageById(String moodTypeId){
+    //     return moodTypeRepository.findMoodTypeImageById(moodTypeId);
 
+    // }
 
     public MoodType createMoodType(MoodType moodType) {
         return moodTypeRepository.save(moodType);
