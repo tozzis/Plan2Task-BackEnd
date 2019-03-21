@@ -30,12 +30,12 @@ public class MoodController {
 
     @Autowired
     private UserAdapter userAdapter;
-    
+
     @Autowired
     MoodService moodService;
 
     @Autowired
-    MoodTypeService MoodTypeService;
+    MoodTypeService moodTypeService;
 
     @Autowired
     private TokenAuthenticationService tokenAuthenticationService;
@@ -47,17 +47,32 @@ public class MoodController {
     }
 
     // @GetMapping(path = "/moods/images/{moodId}")
-    // public ResponseEntity<MoodType> getMoodTypeImageByMoodId(@PathVariable("moodId") String moodId) {
-    //     MoodType moodType = moodService.getMoodTypeImageByMoodId(moodId);
-    //     return new ResponseEntity<>(moodType, HttpStatus.OK);
+    // public ResponseEntity<MoodType>
+    // getMoodTypeImageByMoodId(@PathVariable("moodId") String moodId) {
+    // MoodType moodType = moodService.getMoodTypeImageByMoodId(moodId);
+    // return new ResponseEntity<>(moodType, HttpStatus.OK);
     // }
 
     @GetMapping(path = "/moods/me")
     public ResponseEntity<List<Mood>> getMoodByUserId(HttpServletRequest request) {
-        String userId = tokenAuthenticationService.getUserByToken(request);
-        List<Mood> moods = moodService.getMoodByUserId(userId);
+        try {
+            String userId = tokenAuthenticationService.getUserByToken(request);
+            List<Mood> moods = moodService.getMoodByUserId(userId);
+            Mood moodTemp = new Mood();
+            for (Mood mood : moods) {
+                moodTemp.setMoodTypeId(mood.getMoodTypeId());
+            }
+            String moodTypeId = moodTemp.getMoodTypeId();
+            MoodType moodType = moodTypeService.getMoodTypeById(moodTypeId);
+            System.out.println("eieiiiiiiiiiiiiiiiiiiiiiiiii"+moodTypeId);
 
-        return new ResponseEntity<>(moods, HttpStatus.OK);
+            
+
+            return new ResponseEntity<List<Mood>>(moods, HttpStatus.OK);
+        } finally {
+
+
+        }
 
     }
 
@@ -76,7 +91,5 @@ public class MoodController {
         moodService.createMood(mood);
         return new ResponseEntity<>(mood, HttpStatus.OK);
     }
-
-
 
 }

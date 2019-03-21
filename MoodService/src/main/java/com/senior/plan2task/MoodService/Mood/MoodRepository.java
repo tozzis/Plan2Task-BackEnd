@@ -7,6 +7,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface MoodRepository extends MongoRepository<Mood, String> {
 
     public List<Mood> findByUserId(String userId);
-
 }
 
