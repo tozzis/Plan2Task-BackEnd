@@ -52,6 +52,15 @@ public class MoodController {
     //     return new ResponseEntity<>(moodType, HttpStatus.OK);
     // }
 
+    @GetMapping(path = "/moods/me")
+    public ResponseEntity<List<Mood>> getMoodByUserId(HttpServletRequest request) {
+        String userId = tokenAuthenticationService.getUserByToken(request);
+        List<Mood> moods = moodService.getMoodByUserId(userId);
+
+        return new ResponseEntity<>(moods, HttpStatus.OK);
+
+    }
+
     @GetMapping(path = "/moods/{moodId}")
     public ResponseEntity<Mood> getMoodById(@PathVariable("moodId") String moodId) {
         Mood mood = moodService.getMoodById(moodId);
