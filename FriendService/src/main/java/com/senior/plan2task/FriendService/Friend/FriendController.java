@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -49,9 +50,14 @@ public class FriendController {
     public ResponseEntity<Friend> AddFriend(HttpServletRequest request, @RequestBody Map<String, String> friend) {
         String userId = tokenAuthenticationService.getUserByToken(request);
         String friendId = friend.get("friendId");
-        Friend friendDetail = new Friend(null, userId, friendId);
-        friendService.createFriend(friendDetail);
-        return new ResponseEntity<>(friendDetail, HttpStatus.OK);
+        Friend friendCheck = friendService.getFriendByUserIdAndFriendId(userId, friendId);
+        if(friendCheck==null){
+            Friend friendDetail = new Friend(null, userId, friendId);
+            friendService.createFriend(friendDetail);
+            return new ResponseEntity<>(friendDetail, HttpStatus.OK);
+        }else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You have already added a friend !!!");
+        }
     }
     
     @DeleteMapping("/friend")
