@@ -22,16 +22,23 @@ public class MoodService {
         return moodRepository.findAll();
     }
 
-    public Mood getMoodById(String mood_id) {
-        return moodRepository.findById(mood_id)
-                .orElseThrow(() -> new ResourceNotFoundException("Mood", "id", mood_id));
+    public List<Mood> getMoodByUserId(String userId) {
+        return moodRepository.findByUserId(userId);
+    }
+
+    public Mood getMoodById(String moodId) {
+        return moodRepository.findById(moodId).orElseThrow(() -> new ResourceNotFoundException("Mood", "id", moodId));
 
     }
 
-    public MoodType getMoodTypeImageByMoodId(String mood_id) {
+    // public MoodType getMoodTypeImageByMoodId(String moodId) {
 
-        return moodTypeService.getMoodTypeImageByMoodId(mood_id);
+    //     return moodTypeService.getMoodTypeImageByMoodId(moodId);
 
+    // }
+
+    public void createMood(Mood mood) {
+        moodRepository.save(mood);
     }
 
 }
