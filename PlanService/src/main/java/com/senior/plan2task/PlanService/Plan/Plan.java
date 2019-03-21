@@ -138,5 +138,5 @@ public class Plan {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-    
+
 }

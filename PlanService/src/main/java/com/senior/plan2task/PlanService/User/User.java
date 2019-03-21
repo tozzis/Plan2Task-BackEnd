@@ -1,12 +1,9 @@
 package com.senior.plan2task.PlanService.User;
 
-
-
 public class User {
 
     private String id;
     
-
     private String email;
 
     private String firstName;
