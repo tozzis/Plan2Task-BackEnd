@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -29,13 +33,6 @@ public class PlanController {
     
     @Autowired
     private TokenAuthenticationService tokenAuthenticationService;
-    
-    @GetMapping ("/plans")
-    public ResponseEntity <User> gettest(HttpServletRequest request){
-       User eiei = userAdapter.getUserById(request,"5c9314088b3f1eca120149c8");
-       //User eiei = new User();
-        return new ResponseEntity<>(eiei, HttpStatus.OK);
-    }
        
     @GetMapping ("/plan")
     public ResponseEntity<List<PlanResponse>> getPlanByUser(HttpServletRequest request){
@@ -46,16 +43,12 @@ public class PlanController {
            for (int i = 0; i < plan.size(); i++) {
                List<User> member = new ArrayList<>();
                if(!plan.get(i).getMember().isEmpty()) {
-                   for (int j = 0; i < plan.get(i).getMember().size(); j++) {
-                       String test = plan.get(i).getMember().get(j).getUserId();
-                       User eiei = userAdapter.getUserById(request, test);
-                       member.add(eiei);
+                   for (int j = 0; j < plan.get(i).getMember().size(); j++) {
+                       member.add(userAdapter.getUserById(request, plan.get(i).getMember().get(j).getUserId()));
                    }
-                   PlanResponse planList = new PlanResponse(plan.get(i).getId(), plan.get(i).getTitle(), plan.get(i).getDetail(), plan.get(i).getStartDate(), plan.get(i).getEndDate(), plan.get(i).getLocation(), member, plan.get(i).getType(), plan.get(i).isStatus(), plan.get(i).getNotification(), plan.get(i).getUserId());
-                   planResponses.add(planList);
-               }else{
-                   PlanResponse planList = new PlanResponse(plan.get(i).getId(), plan.get(i).getTitle(), plan.get(i).getDetail(), plan.get(i).getStartDate(), plan.get(i).getEndDate(), plan.get(i).getLocation(), null, plan.get(i).getType(), plan.get(i).isStatus(), plan.get(i).getNotification(), plan.get(i).getUserId());
-                   planResponses.add(planList);
+                   planResponses.add(new PlanResponse(plan.get(i).getId(), plan.get(i).getTitle(), plan.get(i).getDetail(), plan.get(i).getStartDate(), plan.get(i).getEndDate(), plan.get(i).getLocation(), member, plan.get(i).getType(), plan.get(i).isStatus(), plan.get(i).getNotification(), plan.get(i).getUserId()));
+               }else {
+                   planResponses.add(new PlanResponse(plan.get(i).getId(), plan.get(i).getTitle(), plan.get(i).getDetail(), plan.get(i).getStartDate(), plan.get(i).getEndDate(), plan.get(i).getLocation(), null, plan.get(i).getType(), plan.get(i).isStatus(), plan.get(i).getNotification(), plan.get(i).getUserId()));
                }
            }
            return new ResponseEntity<>(planResponses, HttpStatus.OK);
@@ -75,13 +68,41 @@ public class PlanController {
     public ResponseEntity<Plan> createPlan(HttpServletRequest request, Plan plan) {
         String userId = tokenAuthenticationService.getUserByToken(request);
         plan.setUserId(userId);
+        plan.setStatus(false);
         List<Member> members = new ArrayList<>();
         members.add(new Member(userId));
-        if(plan.getMember()==null){
+        if(!plan.getMember().isEmpty()){
+            for (int i = 0; i < plan.getMember().size(); i++) {
+                members.add(plan.getMember().get(i));
+            }
+            plan.setMember(members);
+        }else {
             plan.setMember(members);
         }
         planService.createPlan(plan);
         return new ResponseEntity<>(plan, HttpStatus.OK);
+    }
+    
+    @PutMapping("/plan/{id}")
+    public ResponseEntity<Plan> editPlan(HttpServletRequest request, @PathVariable String id) {
+        String userId = tokenAuthenticationService.getUserByToken(request);
+        Plan plan = planService.getPlanById(id);
+        return new ResponseEntity<>(plan, HttpStatus.OK);
+    }
+    
+    @DeleteMapping("/plan/{id}")
+    public ResponseEntity<Plan> deletePlan(HttpServletRequest request, @PathVariable String id) {
+        String userId = tokenAuthenticationService.getUserByToken(request);
+        Plan plan = planService.getPlanById(id);
+        if(userId.equals(plan.getUserId())){
+            if(plan.isStatus()==false){
+                return new ResponseEntity<>(plan, HttpStatus.OK);
+            }else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This plan has been completed and cannot be deleted !!!");
+            }
+        }else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You do not have permission to delete this plan !!!");
+        }
     }
     
 }

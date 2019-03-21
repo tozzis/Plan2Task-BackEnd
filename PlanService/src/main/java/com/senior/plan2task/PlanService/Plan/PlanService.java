@@ -18,8 +18,17 @@ public class PlanService {
     public List<Plan> getPlanByStartDate(LocalDate startDate, String userId){
         return planRepository.findPlanByStartDateAndUserId(startDate,userId);
     }
+    
+    public Plan getPlanById(String id){
+        return planRepository.findById(id).get();
+    }
+    
     public void createPlan(Plan plan){
          planRepository.save(plan);
+    }
+    
+    public void deletePlan(String id){
+        planRepository.deleteById(id);
     }
     
 }
