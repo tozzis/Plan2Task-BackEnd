@@ -2,7 +2,6 @@ package com.senior.plan2task.MoodService.Mood;
 
 import java.util.Date;
 
-import com.senior.plan2task.MoodService.User.User;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,14 +16,19 @@ public class Mood {
 
     private Date moodDate;
 
-    private User user;
+    private String userId;
+
+    private String moodTypeId;
+
+    private String moodDetail;
 
     public Mood() {
     }
 
-    public Mood(String id, String moodName, Date moodDate) {
+    public Mood(String id, String moodName,String moodDetail, Date moodDate,String userId,String moodTypeId) {
         this.id = id;
         this.moodName = moodName;
+        this.moodDetail = moodDetail;
         this.moodDate = moodDate;
     }
 
@@ -51,5 +55,30 @@ public class Mood {
     public void setMoodDate(Date moodDate) {
         this.moodDate = moodDate;
     }
+
+    public String getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getMoodTypeId() {
+        return this.moodTypeId;
+    }
+
+    public void setMoodTypeId(String moodTypeId) {
+        this.moodTypeId = moodTypeId;
+    }
+
+    public String getMoodDetail() {
+        return this.moodDetail;
+    }
+
+    public void setMoodDetail(String moodDetail) {
+        this.moodDetail = moodDetail;
+    }
+    
 
 }
