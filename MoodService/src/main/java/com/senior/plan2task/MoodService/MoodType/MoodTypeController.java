@@ -31,6 +31,12 @@ public class MoodTypeController {
         return new ResponseEntity<>(moodType, HttpStatus.OK);
 
     }
+    // @GetMapping(path = "/moodtypesimage/{moodTypeId}")
+    // public ResponseEntity<MoodType> getMoodTypeImageById(@PathVariable("moodTypeId") String moodTypeId) {
+    //     MoodType moodType = moodTypeService.getMoodTypeImageById(moodTypeId);
+    //     return new ResponseEntity<>(moodType, HttpStatus.OK);
+
+    // }
 
     @PostMapping("/moodtype")
     public ResponseEntity<MoodType> createMoodType(@RequestBody(required = true) MoodType moodType) {
