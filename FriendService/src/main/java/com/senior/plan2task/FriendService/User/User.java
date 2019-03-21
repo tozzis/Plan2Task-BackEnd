@@ -1,9 +1,18 @@
 package com.senior.plan2task.FriendService.User;
 
-public class User {
+import javax.validation.constraints.Email;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "users")
+public class User {
+    
+    @Id
     private String id;
     
+    @Email
+    @Indexed(unique = true)
     private String email;
 
     private String firstName;
