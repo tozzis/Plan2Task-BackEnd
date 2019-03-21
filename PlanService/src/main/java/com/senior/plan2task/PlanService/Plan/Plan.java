@@ -1,11 +1,12 @@
 package com.senior.plan2task.PlanService.Plan;
 
-import com.senior.plan2task.PlanService.User.User;
-import java.util.Date;
+import com.senior.plan2task.PlanService.Model.Location;
+import com.senior.plan2task.PlanService.Model.Member;
+import com.senior.plan2task.PlanService.Model.Notification;
+import java.time.LocalDate;
+import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-
 
 @Document(collection = "plans")
 public class Plan {
@@ -17,26 +18,26 @@ public class Plan {
     
     private String detail;
     
-    private Date startDate;
+    private LocalDate startDate;
     
-    private Date endDate;
+    private LocalDate endDate;
     
-    private String location;
+    private Location location;
     
-    private User member;
+    private List<Member> member;
     
     private String type;
     
     private boolean status;
     
-    private String notification;
+    private Notification notification;
     
     private String userId;
 
     public Plan() {
     }
 
-    public Plan(String id, String title, String detail, Date startDate, Date endDate, String location, User member, String type, boolean status, String notification, String userId) {
+    public Plan(String id, String title, String detail, LocalDate startDate, LocalDate endDate, Location location, List<Member> member, String type, boolean status, Notification notification, String userId) {
         this.id = id;
         this.title = title;
         this.detail = detail;
@@ -74,35 +75,35 @@ public class Plan {
         this.detail = detail;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
-    public User getMember() {
+    public List<Member> getMember() {
         return member;
     }
 
-    public void setMember(User member) {
+    public void setMember(List<Member> member) {
         this.member = member;
     }
 
@@ -122,11 +123,11 @@ public class Plan {
         this.status = status;
     }
 
-    public String getNotification() {
+    public Notification getNotification() {
         return notification;
     }
 
-    public void setNotification(String notification) {
+    public void setNotification(Notification notification) {
         this.notification = notification;
     }
 
@@ -137,5 +138,5 @@ public class Plan {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-
+    
 }

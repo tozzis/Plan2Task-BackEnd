@@ -1,27 +1,22 @@
 package com.senior.plan2task.PlanService.Plan;
 
-import com.senior.plan2task.PlanService.User.User;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class PlanService {
- @Autowired
+    
+    @Autowired
     private PlanRepository planRepository;
- 
-    public List<Plan> findAllPlan() {
-        return planRepository.findAll();
-    }
-    public List<Plan> getPlanByUser(User id){
-        return planRepository.findPlanByUser(id);
+    
+    public List<Plan> getPlanByUser(String id){
+        return planRepository.findPlanByUserId(id);
     }
     
-    public List<Plan> findPlanByStartDate(Date startDate) {
-        return planRepository.findPlanByStartDate(startDate);
-    }
-    public List<Plan> getPlanByStartDate(Date startDate){
-        return planRepository.findPlanByStartDate(startDate);
+    public List<Plan> getPlanByStartDate(LocalDate startDate, String userId){
+        return planRepository.findPlanByStartDateAndUserId(startDate,userId);
     }
     public void createPlan(Plan plan){
          planRepository.save(plan);
