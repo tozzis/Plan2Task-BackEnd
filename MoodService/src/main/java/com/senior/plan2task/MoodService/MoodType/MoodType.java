@@ -17,18 +17,15 @@ public class MoodType {
 
     private String MoodTypeImage;
 
-    @JsonIgnore
-    private Mood mood;
 
 
     public MoodType() {
     }
 
-    public MoodType(String id, String moodTypeName, String MoodTypeImage, Mood mood) {
+    public MoodType(String id, String moodTypeName, String MoodTypeImage) {
         this.id = id;
         this.moodTypeName = moodTypeName;
         this.MoodTypeImage = MoodTypeImage;
-        this.mood = mood;
     }
 
     public String getId() {
@@ -55,12 +52,6 @@ public class MoodType {
         this.MoodTypeImage = MoodTypeImage;
     }
 
-    public Mood getMood() {
-        return this.mood;
-    }
 
-    public void setMood(Mood mood) {
-        this.mood = mood;
-    }
 
 }
