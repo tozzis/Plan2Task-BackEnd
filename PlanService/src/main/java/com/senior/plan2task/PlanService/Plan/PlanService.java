@@ -23,7 +23,7 @@ public class PlanService {
         return planRepository.findById(id).get();
     }
     
-    public void createPlan(Plan plan){
+    public void savePlan(Plan plan){
          planRepository.save(plan);
     }
     

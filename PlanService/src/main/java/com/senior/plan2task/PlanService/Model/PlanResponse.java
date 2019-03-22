@@ -2,7 +2,6 @@ package com.senior.plan2task.PlanService.Model;
 
 import com.senior.plan2task.PlanService.User.User;
 import java.time.LocalDate;
-import java.util.List;
 
 public class PlanResponse {
     
@@ -18,31 +17,25 @@ public class PlanResponse {
     
     private Location location;
     
-    private List<User> member;
-    
     private String type;
     
     private boolean status;
     
-    private Notification notification;
-    
-    private String userId;
+    private User user;
 
     public PlanResponse() {
     }
 
-    public PlanResponse(String id, String title, String detail, LocalDate startDate, LocalDate endDate, Location location, List<User> member, String type, boolean status, Notification notification, String userId) {
+    public PlanResponse(String id, String title, String detail, LocalDate startDate, LocalDate endDate, Location location, String type, boolean status, User user) {
         this.id = id;
         this.title = title;
         this.detail = detail;
         this.startDate = startDate;
         this.endDate = endDate;
         this.location = location;
-        this.member = member;
         this.type = type;
         this.status = status;
-        this.notification = notification;
-        this.userId = userId;
+        this.user = user;
     }
 
     public String getId() {
@@ -93,14 +86,6 @@ public class PlanResponse {
         this.location = location;
     }
 
-    public List<User> getMember() {
-        return member;
-    }
-
-    public void setMember(List<User> member) {
-        this.member = member;
-    }
-
     public String getType() {
         return type;
     }
@@ -117,20 +102,12 @@ public class PlanResponse {
         this.status = status;
     }
 
-    public Notification getNotification() {
-        return notification;
+    public User getUser() {
+        return user;
     }
 
-    public void setNotification(Notification notification) {
-        this.notification = notification;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
     
 }

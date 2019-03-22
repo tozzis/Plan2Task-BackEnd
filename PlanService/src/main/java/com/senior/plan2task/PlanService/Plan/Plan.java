@@ -1,10 +1,7 @@
 package com.senior.plan2task.PlanService.Plan;
 
 import com.senior.plan2task.PlanService.Model.Location;
-import com.senior.plan2task.PlanService.Model.Member;
-import com.senior.plan2task.PlanService.Model.Notification;
 import java.time.LocalDate;
-import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -24,30 +21,24 @@ public class Plan {
     
     private Location location;
     
-    private List<Member> member;
-    
     private String type;
     
     private boolean status;
     
-    private Notification notification;
-    
     private String userId;
-
+    
     public Plan() {
     }
 
-    public Plan(String id, String title, String detail, LocalDate startDate, LocalDate endDate, Location location, List<Member> member, String type, boolean status, Notification notification, String userId) {
+    public Plan(String id, String title, String detail, LocalDate startDate, LocalDate endDate, Location location, String type, boolean status, String userId) {
         this.id = id;
         this.title = title;
         this.detail = detail;
         this.startDate = startDate;
         this.endDate = endDate;
         this.location = location;
-        this.member = member;
         this.type = type;
         this.status = status;
-        this.notification = notification;
         this.userId = userId;
     }
 
@@ -99,14 +90,6 @@ public class Plan {
         this.location = location;
     }
 
-    public List<Member> getMember() {
-        return member;
-    }
-
-    public void setMember(List<Member> member) {
-        this.member = member;
-    }
-
     public String getType() {
         return type;
     }
@@ -123,14 +106,6 @@ public class Plan {
         this.status = status;
     }
 
-    public Notification getNotification() {
-        return notification;
-    }
-
-    public void setNotification(Notification notification) {
-        this.notification = notification;
-    }
-
     public String getUserId() {
         return userId;
     }
@@ -138,5 +113,5 @@ public class Plan {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-
+    
 }
