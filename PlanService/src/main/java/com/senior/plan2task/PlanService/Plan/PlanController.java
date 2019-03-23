@@ -34,7 +34,7 @@ public class PlanController {
     @Autowired
     private TokenAuthenticationService tokenAuthenticationService;
        
-    @GetMapping ("/plan")
+    @GetMapping ("/plans")
     public ResponseEntity<List<PlanResponse>> getPlanByUser(HttpServletRequest request){
        String userId = tokenAuthenticationService.getUserByToken(request);
        List<Plan> plan = planService.getPlanByUser(userId);
@@ -49,7 +49,7 @@ public class PlanController {
        }
     }
 
-    @PostMapping ("/plan/startDate")
+    @PostMapping ("/plans/startDate")
     public ResponseEntity<List<Plan>> getPlanByStartDate(HttpServletRequest request, LocalDate startDate) {
         String userId = tokenAuthenticationService.getUserByToken(request);
         List<Plan> plan = planService.getPlanByStartDate(startDate,userId);
