@@ -10,29 +10,34 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "tasks")
 public class Task {
-    
+
     @Id
     private String id;
-    
+
     private int priority;
-    
+
     private String title;
-    
+
     private String detail;
-    
+
     private LocalDate date;
-    
+
     private LocalTime time;
-    
+
     private Location location;
-    
-    @DBRef(db="plan")
+
+    private String userId;
+
+    private Boolean taskStatus;
+
+    @DBRef(db = "plan")
     private Plan plan;
 
     public Task() {
     }
 
-    public Task(String id, int priority, String title, String detail, LocalDate date, LocalTime time, Location location, Plan plan) {
+    public Task(String id, int priority, String title, String detail, LocalDate date, LocalTime time, Location location,
+            String userId, Boolean taskStatus, Plan plan) {
         this.id = id;
         this.priority = priority;
         this.title = title;
@@ -40,6 +45,8 @@ public class Task {
         this.date = date;
         this.time = time;
         this.location = location;
+        this.userId = userId;
+        this.taskStatus = taskStatus;
         this.plan = plan;
     }
 
@@ -105,6 +112,26 @@ public class Task {
 
     public void setPlan(Plan plan) {
         this.plan = plan;
+    }
+
+    public String getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Boolean isTaskStatus() {
+        return this.taskStatus;
+    }
+
+    public Boolean getTaskStatus() {
+        return this.taskStatus;
+    }
+
+    public void setTaskStatus(Boolean taskStatus) {
+        this.taskStatus = taskStatus;
     }
 
 }
