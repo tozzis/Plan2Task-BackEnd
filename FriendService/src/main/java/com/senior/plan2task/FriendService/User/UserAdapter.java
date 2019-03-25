@@ -21,4 +21,14 @@ public class UserAdapter {
         return user;
     }
     
+     public User getUserByEmail(HttpServletRequest request, String email){
+        RestTemplate restTemplate = new RestTemplate();
+        String url = userService+"/user/email";
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", request.getHeader("Authorization"));
+        HttpEntity<UserRequestEmail> entity = new HttpEntity<>(new UserRequestEmail(email), headers);
+        User user = restTemplate.exchange(url, HttpMethod.POST, entity, User.class).getBody();
+        return user;
+    }
+    
 }
