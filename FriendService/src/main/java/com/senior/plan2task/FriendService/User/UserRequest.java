@@ -6,7 +6,7 @@ class UserRequest {
 
     public UserRequest() {
     }
-
+    
     public UserRequest(String Id) {
         this.Id = Id;
     }

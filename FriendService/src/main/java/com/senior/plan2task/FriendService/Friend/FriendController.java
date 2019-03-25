@@ -51,12 +51,29 @@ public class FriendController {
         String userId = tokenAuthenticationService.getUserByToken(request);
         String friendId = friend.get("friendId");
         Friend friendCheck = friendService.getFriendByUserIdAndFriendId(userId, friendId);
-        if(friendCheck==null){
+        if(friendCheck==null) {
             Friend friendDetail = new Friend(null, userId, friendId);
             friendService.createFriend(friendDetail);
             return new ResponseEntity<>(friendDetail, HttpStatus.OK);
         }else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You have already added a friend !!!");
+        }
+    }
+    
+     @PostMapping("/friend/email")
+    public ResponseEntity<FriendCheckEmailResponse> CheckFriendByEmail(HttpServletRequest request, @RequestBody Map<String, String> friend) {
+        String friendEmail = friend.get("email");
+        User friendDetail = userAdapter.getUserByEmail(request, friendEmail);
+        if(friendDetail!=null){
+            String userId = tokenAuthenticationService.getUserByToken(request);
+            Friend friendCheck = friendService.getFriendByUserIdAndFriendId(userId, friendDetail.getId());
+            if(friendCheck!=null){
+                return new ResponseEntity<>(new FriendCheckEmailResponse(friendDetail, true), HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>(new FriendCheckEmailResponse(friendDetail, false), HttpStatus.OK);
+            }
+        }else {
+            return new ResponseEntity<>(null, HttpStatus.OK);
         }
     }
     
