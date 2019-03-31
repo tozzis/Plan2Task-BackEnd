@@ -29,6 +29,8 @@ public class Task {
     private String userId;
 
     private Boolean taskStatus;
+    
+    private String picture;
 
     @DBRef(db = "plan")
     private Plan plan;
@@ -48,6 +50,7 @@ public class Task {
         this.userId = userId;
         this.taskStatus = taskStatus;
         this.plan = plan;
+        this.picture = picture;
     }
 
     public String getId() {
@@ -132,6 +135,14 @@ public class Task {
 
     public void setTaskStatus(Boolean taskStatus) {
         this.taskStatus = taskStatus;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
 }
