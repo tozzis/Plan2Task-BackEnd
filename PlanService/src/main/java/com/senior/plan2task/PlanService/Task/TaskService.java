@@ -3,6 +3,7 @@ package com.senior.plan2task.PlanService.Task;
 import java.util.List;
 import com.senior.plan2task.PlanService.Plan.Plan;
 import com.senior.plan2task.PlanService.Plan.PlanService;
+import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,15 @@ public class TaskService {
     public List<Task> getTaskByTaskStatus(Boolean taskStatus, String userId) {
         return taskRepository.findTaskByTaskStatus(taskStatus, userId);
     }
+    
+    public List<Task> getTaskByLocaldate(LocalDate date){
+        return taskRepository.findTaskByLocalDate(date);
+    }
+    
+    public List<Task> getTaskByLocaldateToday(LocalDate date){
+        return taskRepository.findTaskByLocalDate(date.now());
+    }
+    
 
 
 }
