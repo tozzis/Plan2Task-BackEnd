@@ -1,5 +1,6 @@
 package com.senior.plan2task.PlanService.Task;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.senior.plan2task.PlanService.Model.Location;
 import com.senior.plan2task.PlanService.Plan.Plan;
 import java.time.LocalDate;
@@ -21,7 +22,6 @@ public class Task {
     private String detail;
 
     private LocalDate date;
-
     private LocalTime time;
 
     private Location location;
@@ -29,10 +29,9 @@ public class Task {
     private String userId;
 
     private Boolean taskStatus;
-    
+
     private String picture;
 
-    @DBRef(db = "plan")
     private Plan plan;
 
     public Task() {
