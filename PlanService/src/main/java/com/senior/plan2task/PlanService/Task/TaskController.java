@@ -54,7 +54,7 @@ public class TaskController {
                 taskResponses.add(new TaskResponse(task.get(i).getId(), task.get(i).getPriority(),
                         task.get(i).getTitle(), task.get(i).getDetail(), task.get(i).getDate(), task.get(i).getTime(),
                         task.get(i).getLocation(), userAdapter.getUserById(request, task.get(i).getUserId()),
-                        task.get(i).isTaskStatus(), taskService.getPlanByUser(task.get(i).getUserId())));
+                        task.get(i).getTaskStatus(), taskService.getPlanByUser(task.get(i).getUserId())));
             }
 
             return new ResponseEntity<>(taskResponses, HttpStatus.OK);
@@ -65,8 +65,8 @@ public class TaskController {
     
     @GetMapping("/tasks/tasktoday")
     public ResponseEntity<List<Task>> getTaskByLocaldateToday(HttpServletRequest request) {
-        //String userId = tokenAuthenticationService.getUserByToken(request);
-        List<Task> task = taskService.getTaskByLocaldateToday(LocalDate.now());
+        String userId = tokenAuthenticationService.getUserByToken(request);
+        List<Task> task = taskService.getTaskByLocaldateToday(LocalDate.now(), userId);
         return new ResponseEntity<>(task, HttpStatus.OK);
     }
 
@@ -83,7 +83,7 @@ public class TaskController {
         String userId = tokenAuthenticationService.getUserByToken(request);
         Task task = taskService.getTaskById(taskRequestEdit.getId());
         if (userId.equals(task.getUserId())) {
-            if (task.isTaskStatus() == false) {
+            if (task.getTaskStatus()== false) {
                 task.setPriority(taskRequestEdit.getPriority());
                 task.setTitle(taskRequestEdit.getTitle());
                 task.setDetail(taskRequestEdit.getDetail());
@@ -107,7 +107,7 @@ public class TaskController {
         String userId = tokenAuthenticationService.getUserByToken(request);
         Task task = taskService.getTaskById(id);
         if (userId.equals(task.getUserId())) {
-            if (task.isTaskStatus() == false) {
+            if (task.getTaskStatus()== false) {
                 taskService.deleteTask(id);
                 return new ResponseEntity<>(task, HttpStatus.OK);
             } else {

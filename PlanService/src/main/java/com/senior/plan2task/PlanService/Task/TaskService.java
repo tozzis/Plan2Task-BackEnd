@@ -44,8 +44,8 @@ public class TaskService {
 //        return taskRepository.findTaskByLocalDate(date);
 //    }
     
-    public List<Task> getTaskByLocaldateToday(LocalDate date){
-        return taskRepository.findTaskByDate(date);
+    public List<Task> getTaskByLocaldateToday(LocalDate date, String userId){
+        return taskRepository.findTaskByDateAndUserId(date, userId);
     }
 
 }
