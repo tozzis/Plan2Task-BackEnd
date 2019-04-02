@@ -7,6 +7,7 @@ import com.senior.plan2task.PlanService.Filter.TokenAuthenticationService;
 import com.senior.plan2task.PlanService.Model.TaskRequestEdit;
 import com.senior.plan2task.PlanService.Model.TaskResponse;
 import com.senior.plan2task.PlanService.User.UserAdapter;
+import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,6 +62,13 @@ public class TaskController {
             return new ResponseEntity<>(null, HttpStatus.OK);
         }
     }
+    
+    @GetMapping("/tasks/tasktoday")
+    public ResponseEntity<List<Task>> getTaskByLocaldateToday(HttpServletRequest request) {
+        //String userId = tokenAuthenticationService.getUserByToken(request);
+        List<Task> task = taskService.getTaskByLocaldateToday(LocalDate.now());
+        return new ResponseEntity<>(task, HttpStatus.OK);
+    }
 
     @PostMapping("/tasks/taskstatus")
     public ResponseEntity<List<Task>> getPlanByStartDate(HttpServletRequest request, Boolean taskStatus) {
@@ -68,6 +76,7 @@ public class TaskController {
         List<Task> task = taskService.getTaskByTaskStatus(taskStatus, userId);
         return new ResponseEntity<>(task, HttpStatus.OK);
     }
+    
 
     @PutMapping("/task")
     public ResponseEntity<Task> editTask(HttpServletRequest request, @RequestBody TaskRequestEdit taskRequestEdit) {

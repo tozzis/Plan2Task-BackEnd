@@ -40,14 +40,12 @@ public class TaskService {
         return taskRepository.findTaskByTaskStatus(taskStatus, userId);
     }
     
-    public List<Task> getTaskByLocaldate(LocalDate date){
-        return taskRepository.findTaskByLocalDate(date);
-    }
+//    public List<Task> getTaskByLocaldate(LocalDate date){
+//        return taskRepository.findTaskByLocalDate(date);
+//    }
     
     public List<Task> getTaskByLocaldateToday(LocalDate date){
-        return taskRepository.findTaskByLocalDate(date.now());
+        return taskRepository.findTaskByDate(date);
     }
-    
-
 
 }
