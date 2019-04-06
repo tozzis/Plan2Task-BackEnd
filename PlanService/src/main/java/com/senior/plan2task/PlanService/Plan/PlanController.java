@@ -59,6 +59,9 @@ public class PlanController {
     @PostMapping ("/plan")
     public ResponseEntity<Plan> createPlan(HttpServletRequest request, @RequestBody Plan plan) {
         String userId = tokenAuthenticationService.getUserByToken(request);
+        if(plan.getStartDate().isAfter(plan.getEndDate())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This plan could not add because StartDate must be before EndDate !!!");
+        }
         plan.setUserId(userId);
         plan.setStatus(false);
         planService.savePlan(plan);
