@@ -62,13 +62,6 @@ public class TaskController {
             return new ResponseEntity<>(null, HttpStatus.OK);
         }
     }
-    
-    @GetMapping("/tasks/tasktoday")
-    public ResponseEntity<List<Task>> getTaskByLocaldateToday(HttpServletRequest request) {
-        String userId = tokenAuthenticationService.getUserByToken(request);
-        List<Task> task = taskService.getTaskByLocaldateToday(LocalDate.now(), userId);
-        return new ResponseEntity<>(task, HttpStatus.OK);
-    }
 
     @PostMapping("/tasks/taskstatus")
     public ResponseEntity<List<Task>> getPlanByStartDate(HttpServletRequest request, Boolean taskStatus) {
