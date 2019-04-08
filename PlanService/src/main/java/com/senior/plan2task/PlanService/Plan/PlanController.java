@@ -57,14 +57,15 @@ public class PlanController {
     
     @PostMapping ("/plan")
     public ResponseEntity<Plan> createPlan(HttpServletRequest request, @RequestBody Plan plan) {
-        String userId = tokenAuthenticationService.getUserByToken(request);
         if(plan.getStartDate().isAfter(plan.getEndDate())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This plan could not add because StartDate must be before EndDate !!!");
+        }else {
+            String userId = tokenAuthenticationService.getUserByToken(request);
+            plan.setUserId(userId);
+            plan.setStatus(false);
+            planService.savePlan(plan);
+            return new ResponseEntity<>(plan, HttpStatus.OK);
         }
-        plan.setUserId(userId);
-        plan.setStatus(false);
-        planService.savePlan(plan);
-        return new ResponseEntity<>(plan, HttpStatus.OK);
     }
     
     @PutMapping("/plan")
@@ -73,15 +74,19 @@ public class PlanController {
         Plan plan = planService.getPlanById(planRequestEdit.getId());
         if(userId.equals(plan.getUserId())){
             if(plan.isStatus()==false){
-                plan.setTitle(planRequestEdit.getTitle());
-                plan.setDetail(planRequestEdit.getDetail());
-                plan.setStartDate(planRequestEdit.getStartDate());
-                plan.setEndDate(planRequestEdit.getEndDate());
-                plan.setLocation(planRequestEdit.getLocation());
-                plan.setType(planRequestEdit.getType());
-                plan.setStatus(planRequestEdit.isStatus());
-                planService.savePlan(plan);
-                return new ResponseEntity<>(plan, HttpStatus.OK);
+                if(plan.getStartDate().isAfter(plan.getEndDate())){
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This plan could not add because StartDate must be before EndDate !!!");
+                }else {
+                    plan.setTitle(planRequestEdit.getTitle());
+                    plan.setDetail(planRequestEdit.getDetail());
+                    plan.setStartDate(planRequestEdit.getStartDate());
+                    plan.setEndDate(planRequestEdit.getEndDate());
+                    plan.setLocation(planRequestEdit.getLocation());
+                    plan.setType(planRequestEdit.getType());
+                    plan.setStatus(planRequestEdit.isStatus());
+                    planService.savePlan(plan);
+                    return new ResponseEntity<>(plan, HttpStatus.OK);
+                }
             }else {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This plan is complete and cannot be modified !!!");
             }
