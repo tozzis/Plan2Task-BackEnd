@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.senior.plan2task.PlanService.Filter.TokenAuthenticationService;
 import com.senior.plan2task.PlanService.Model.TaskRequest;
 import com.senior.plan2task.PlanService.Model.TaskRequestEdit;
+import com.senior.plan2task.PlanService.Model.TaskRequestPriority;
 import com.senior.plan2task.PlanService.Plan.Plan;
 import com.senior.plan2task.PlanService.Plan.PlanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,27 @@ public class TaskController {
             } else {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This task is complete and cannot be modified !!!");
             }
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You are not allowed to modify this task !!!");
+        }
+    }
+    
+    @PutMapping("/task/priority")
+    public ResponseEntity<List<Task>> editTaskPriority(HttpServletRequest request, @RequestBody TaskRequestPriority taskRequestPriority) {
+        String userId = tokenAuthenticationService.getUserByToken(request);
+        Plan plan = planService.getPlanById(taskRequestPriority.getPlan());
+        if(plan.getUserId().equals(userId)){
+            List<Task> task = taskService.getTaskByPlan(plan.getId());
+            for (int i = 0; i < task.size(); i++) {
+                for (int j = 0; j < taskRequestPriority.getTask().size(); j++) {
+                    if(task.get(i).getId().equals(taskRequestPriority.getTask().get(j).getId())){
+                        task.get(i).setPriority(taskRequestPriority.getTask().get(j).getPriority());
+                        break;
+                    }
+                }
+                taskService.saveTask(task.get(i));
+            }
+            return new ResponseEntity<>(task, HttpStatus.OK);
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You are not allowed to modify this task !!!");
         }
