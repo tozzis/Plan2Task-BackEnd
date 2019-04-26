@@ -1,7 +1,6 @@
 package com.senior.plan2task.PlanService.Task;
 
 import com.senior.plan2task.PlanService.Model.Location;
-import com.senior.plan2task.PlanService.Plan.Plan;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import org.springframework.data.annotation.Id;
@@ -31,12 +30,12 @@ public class Task {
 
     private String picture;
 
-    private Plan plan;
+    private String plan;
 
     public Task() {
     }
 
-    public Task(String id, int priority, String title, String detail, LocalDate date, LocalTime time, Location location, String userId, Boolean taskStatus, String picture, Plan plan) {
+    public Task(String id, int priority, String title, String detail, LocalDate date, LocalTime time, Location location, String userId, Boolean taskStatus, String picture, String plan) {
         this.id = id;
         this.priority = priority;
         this.title = title;
@@ -130,11 +129,11 @@ public class Task {
         this.picture = picture;
     }
 
-    public Plan getPlan() {
+    public String getPlan() {
         return plan;
     }
 
-    public void setPlan(Plan plan) {
+    public void setPlan(String plan) {
         this.plan = plan;
     }
     

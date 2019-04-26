@@ -60,7 +60,7 @@ public class FriendController {
         }
     }
     
-     @PostMapping("/friend/email")
+    @PostMapping("/friend/email")
     public ResponseEntity<FriendCheckEmailResponse> CheckFriendByEmail(HttpServletRequest request, @RequestBody Map<String, String> friend) {
         String friendEmail = friend.get("email");
         User friendDetail = userAdapter.getUserByEmail(request, friendEmail);

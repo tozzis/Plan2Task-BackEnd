@@ -1,13 +1,12 @@
 package com.senior.plan2task.PlanService.Task;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import com.senior.plan2task.PlanService.Filter.TokenAuthenticationService;
+import com.senior.plan2task.PlanService.Model.TaskRequest;
 import com.senior.plan2task.PlanService.Model.TaskRequestEdit;
-import com.senior.plan2task.PlanService.Model.TaskResponse;
-import com.senior.plan2task.PlanService.User.UserAdapter;
-import java.time.LocalDate;
+import com.senior.plan2task.PlanService.Plan.Plan;
+import com.senior.plan2task.PlanService.Plan.PlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,51 +24,41 @@ import org.springframework.web.server.ResponseStatusException;
 @CrossOrigin(origins = "*", maxAge = 3600)
 
 public class TaskController {
+    
     @Autowired
-    private UserAdapter userAdapter;
+    private PlanService planService;
 
     @Autowired
     private TaskService taskService;
 
     @Autowired
     private TokenAuthenticationService tokenAuthenticationService;
+    
+    @GetMapping ("/task/plan/id/{id}")
+    public ResponseEntity<List<Task>> getTaskById(HttpServletRequest request, @PathVariable String id){
+       String userId = tokenAuthenticationService.getUserByToken(request);
+       Plan plan = planService.getPlanById(id);
+       if(plan.getUserId().equals(userId)){
+            List<Task> task = taskService.getTaskByPlan(plan.getId());
+            return new ResponseEntity<>(task, HttpStatus.OK);
+       } else {
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You do not have permission to view the plan !!!");
+       }
+    }
 
     @PostMapping("/task")
-    public ResponseEntity<Task> createTask(HttpServletRequest request, @RequestBody Task task) {
+    public ResponseEntity<Task> createTask(HttpServletRequest request, @RequestBody TaskRequest taskRequest) {
         String userId = tokenAuthenticationService.getUserByToken(request);
-        task.setUserId(userId);
-        task.setTaskStatus(false);
-        taskService.saveTask(task);
-        return new ResponseEntity<>(task, HttpStatus.OK);
-    }
-
-    @GetMapping("/tasks")
-    public ResponseEntity<List<TaskResponse>> getTaskByUser(HttpServletRequest request) {
-        String userId = tokenAuthenticationService.getUserByToken(request);
-        List<Task> task = taskService.getTaskByUser(userId);
-
-        if (!task.isEmpty()) {
-            List<TaskResponse> taskResponses = new ArrayList<>();
-            for (int i = 0; i < task.size(); i++) {
-                taskResponses.add(new TaskResponse(task.get(i).getId(), task.get(i).getPriority(),
-                        task.get(i).getTitle(), task.get(i).getDetail(), task.get(i).getDate(), task.get(i).getTime(),
-                        task.get(i).getLocation(), userAdapter.getUserById(request, task.get(i).getUserId()),
-                        task.get(i).getTaskStatus(), taskService.getPlanByUser(task.get(i).getUserId())));
-            }
-
-            return new ResponseEntity<>(taskResponses, HttpStatus.OK);
+        Plan plan = planService.getPlanById(taskRequest.getPlan());
+        if(plan!=null && plan.getUserId().equals(userId)){
+            List<Task> taskData = taskService.getTaskByPlan(plan.getId());
+            Task task = new Task( null, taskData.size()+1, taskRequest.getTitle(), taskRequest.getDetail(), taskRequest.getDate(), taskRequest.getTime(), taskRequest.getLocation(), userId, false, taskRequest.getPicture(), plan.getId());
+            taskService.saveTask(task);
+            return new ResponseEntity<>(task, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.OK);
-        }
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This plan is not in the system or you do not have the right to add plans !!!");
+       }
     }
-
-    @PostMapping("/tasks/taskstatus")
-    public ResponseEntity<List<Task>> getPlanByStartDate(HttpServletRequest request, Boolean taskStatus) {
-        String userId = tokenAuthenticationService.getUserByToken(request);
-        List<Task> task = taskService.getTaskByTaskStatus(taskStatus, userId);
-        return new ResponseEntity<>(task, HttpStatus.OK);
-    }
-    
 
     @PutMapping("/task")
     public ResponseEntity<Task> editTask(HttpServletRequest request, @RequestBody TaskRequestEdit taskRequestEdit) {
@@ -87,8 +76,7 @@ public class TaskController {
                 taskService.saveTask(task);
                 return new ResponseEntity<>(task, HttpStatus.OK);
             } else {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                        "This task is complete and cannot be modified !!!");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This task is complete and cannot be modified !!!");
             }
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You are not allowed to modify this task !!!");
@@ -104,12 +92,10 @@ public class TaskController {
                 taskService.deleteTask(id);
                 return new ResponseEntity<>(task, HttpStatus.OK);
             } else {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                        "This task has been completed and cannot be deleted !!!");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This task has been completed and cannot be deleted !!!");
             }
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "You do not have permission to delete this task !!!");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You do not have permission to delete this task !!!");
         }
     }
 
