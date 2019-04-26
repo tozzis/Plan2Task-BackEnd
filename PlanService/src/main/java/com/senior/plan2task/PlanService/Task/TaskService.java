@@ -15,7 +15,7 @@ public class TaskService {
     }
     
     public List<Task> getTaskByPlan(String plan) {
-        return taskRepository.findTaskByPlan(plan);
+        return taskRepository.findTaskByPlanOrderByPriorityAsc(plan);
     }
 
     public void saveTask(Task task) {
