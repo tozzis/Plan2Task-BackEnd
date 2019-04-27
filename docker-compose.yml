@@ -1,0 +1,7 @@
+version: "3.5"
+
+services: 
+  user:
+    build: UserService
+    ports: 
+      - "3001:3001"
