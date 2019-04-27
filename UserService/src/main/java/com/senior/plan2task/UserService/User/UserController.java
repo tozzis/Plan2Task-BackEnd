@@ -32,7 +32,6 @@ public class UserController {
     @GetMapping("/user")
     public ResponseEntity<User> getUser(HttpServletRequest request) {
         String id = tokenAuthenticationService.getUserByToken(request);
-        System.out.println("id :"+id);
         User user = userService.getUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
