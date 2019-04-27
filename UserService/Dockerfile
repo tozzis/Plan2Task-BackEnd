@@ -1,5 +1,7 @@
 FROM openjdk:8-jdk-alpine
 
+MAINTAINER tozzis
+
 VOLUME /tmp
 
 EXPOSE 3001
