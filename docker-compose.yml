@@ -5,3 +5,11 @@ services:
     build: UserService
     ports: 
       - "3001:3001"
+  friend:
+    build: FriendService
+    ports: 
+      - "3004:3004"
+  plan:
+    build: PlanService
+    ports: 
+      - "3002:3002"
