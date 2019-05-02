@@ -4,7 +4,5 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: docker-compose stop
-      - run: docker system prune
-      - run: docker system prune -a
       - run: docker-compose build
+      - run: docker-compose up -d
