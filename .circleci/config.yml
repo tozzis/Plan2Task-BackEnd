@@ -10,8 +10,8 @@ jobs:
      - run: docker-compose down
      - run: docker-compose build
      - run: docker-compose up -d
-     - deploy:
-          name: Run docker finish
-          command: |
-            echo "finish"
-     
+   deployment:
+     production:
+          branch: master
+          commands:
+               - bin/push.sh
