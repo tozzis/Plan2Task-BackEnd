@@ -9,8 +9,7 @@ jobs:
      - checkout
      - run:
         name: ssh and git
-        command: 'ssh -i ~/.ssh/gc_plan2task_app tozzis@35.198.252.173 \
-        sudo git pull'
+        command: ssh -i ~/.ssh/gc_plan2task_app tozzis@35.198.252.173
      - run: docker-compose down
      - run: docker-compose build
      - run: docker-compose up -d
