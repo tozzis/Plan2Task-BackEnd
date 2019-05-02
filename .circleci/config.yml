@@ -5,10 +5,7 @@ jobs:
    working_directory: ~/Plan2Task-BackEnd
    steps:
      - checkout
-     - run:
-          command: 'sudo docker-compose stop'
-     - run:
-          command: 'sudo docker-compose build'
-     - run:
-          command: 'sudo docker-compose up -d'
+     - run: docker-compose stop
+     - run: docker-compose build
+     - run: docker-compose up -d
      
