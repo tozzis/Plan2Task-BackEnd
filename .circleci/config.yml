@@ -6,6 +6,8 @@ jobs:
    steps:
      - checkout
      - run:
+          command: 'sudo docker-compose stop'
+     - run:
           command: 'sudo docker-compose build'
      - run:
           command: 'sudo docker-compose up -d'
