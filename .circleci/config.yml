@@ -1,9 +1,10 @@
-version: 2
+version: 2.0
 jobs:
-  build:
-    machine: true
-    working_directory: /var/Plan2Task-BackEnd
-    steps:
-      - checkout
-      - run: sudo docker-compose build
-      - run: sudo docker-compose up -d
+ build:
+   steps:
+     - checkout
+     - run:
+          command: 'sudo docker-compose build'
+     - run:
+          command: 'sudo docker-compose up -d'
+     
