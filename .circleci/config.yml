@@ -1,11 +1,13 @@
 version: 2.0
 jobs:
  build:
-   machine: true
+   machine: 
+     services:
+      - docker
    working_directory: ~/Plan2Task-BackEnd
    steps:
      - checkout
-     - run: docker-compose stop
+     - run: docker-compose down
      - run: docker-compose build
      - run: docker-compose up -d
      - deploy:
