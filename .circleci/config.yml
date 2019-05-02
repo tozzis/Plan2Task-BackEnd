@@ -8,4 +8,8 @@ jobs:
      - run: docker-compose stop
      - run: docker-compose build
      - run: docker-compose up -d
+     - deploy:
+          name: Run docker finish
+          command: |
+            echo "finish"
      
