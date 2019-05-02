@@ -8,7 +8,7 @@ jobs:
    steps:
      - run:
         name: ssh login
-        commands: ssh -i ~/.ssh/gc_plan2task_app tozzis@35.198.252.173
+        commands: 'ssh -i ~/.ssh/gc_plan2task_app tozzis@35.198.252.173'
      - checkout
      - run: docker-compose down
      - run: docker-compose build
