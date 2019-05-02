@@ -28,6 +28,11 @@ public class UserController {
     
     @Autowired
     private TokenAuthenticationService tokenAuthenticationService;
+
+    @GetMapping("/")
+    public ResponseEntity<String> getHome(HttpServletRequest request) {
+        return new ResponseEntity<>("test", HttpStatus.OK);
+    }
     
     @GetMapping("/user")
     public ResponseEntity<User> getUser(HttpServletRequest request) {

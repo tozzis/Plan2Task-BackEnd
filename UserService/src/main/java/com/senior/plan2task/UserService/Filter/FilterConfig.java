@@ -12,7 +12,7 @@ public class FilterConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
-            .antMatchers(HttpMethod.GET,"/user/fb/signin").permitAll()
+            .antMatchers(HttpMethod.GET , "/","/user/fb/signin").permitAll()
             .anyRequest().authenticated()
             .and()
             .addFilterBefore(
