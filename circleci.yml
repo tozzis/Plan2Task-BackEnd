@@ -1,0 +1,15 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - docker-compose stop
+    - docker system prune
+    - docker system prune -a
+    - docker info
+    - docker-compose build
+
+test:
+  override:
+    - docker-compose up -d
