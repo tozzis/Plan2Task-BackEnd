@@ -1,15 +1,10 @@
-machine:
-  services:
-    - docker
-
-dependencies:
-  override:
-    - docker-compose stop
-    - docker system prune
-    - docker system prune -a
-    - docker info
-    - docker-compose build
-
-test:
-  override:
-    - docker-compose up -d
+version: 2
+jobs:
+  build:
+    machine: true
+    steps:
+      - checkout
+      - run: docker-compose stop
+      - run: docker system prune
+      - run: docker system prune -a
+      - run: docker-compose build
