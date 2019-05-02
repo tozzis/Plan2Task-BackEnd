@@ -1,18 +1,19 @@
-FROM maven:3.5.2-jdk-8-alpine AS build
-
-MAINTAINER tozzis
-
-WORKDIR /app
-COPY pom.xml /app/
-COPY src /app/src/
-RUN mvn package
-
-FROM openjdk:8-jdk-alpine
+FROM maven:3.6.1-jdk-8-alpine as build
 
 WORKDIR /app
 
-COPY --from=build /app/target/PlanService-0.0.1-SNAPSHOT.jar /app
+COPY ./pom.xml /app
 
-EXPOSE 3001
+RUN mvn verify clean package --fail-never
 
-ENTRYPOINT ["java", "-jar", "/app/PlanService-0.0.1-SNAPSHOT.jar"]
+COPY ./src /app/src
+
+RUN mvn clean package -DskipTests
+
+FROM openjdk:8-jdk-stretch
+
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar /app
+
+CMD ["sh", "-c", "java -jar *.jar"]
