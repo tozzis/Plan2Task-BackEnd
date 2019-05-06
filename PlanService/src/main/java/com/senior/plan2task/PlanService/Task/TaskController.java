@@ -65,15 +65,32 @@ public class TaskController {
     public ResponseEntity<Task> editTask(HttpServletRequest request, @RequestBody TaskRequestEdit taskRequestEdit) {
         String userId = tokenAuthenticationService.getUserByToken(request);
         Task task = taskService.getTaskById(taskRequestEdit.getId());
+        Plan plan = planService.getPlanById(task.getPlan());
         if (userId.equals(task.getUserId())) {
-            if (task.getTaskStatus()== false) {
-                task.setPriority(taskRequestEdit.getPriority());
+            if (plan.isStatus() == false) {
                 task.setTitle(taskRequestEdit.getTitle());
                 task.setDetail(taskRequestEdit.getDetail());
-                task.setDate(taskRequestEdit.getDate());
-                task.setTime(taskRequestEdit.getTime());
-                task.setLocation(taskRequestEdit.getLocation());
-                task.setTaskStatus(taskRequestEdit.isTaskStatus());
+//                task.setDate(taskRequestEdit.getDate());
+//                task.setTime(taskRequestEdit.getTime());
+//                task.setLocation(taskRequestEdit.getLocation());
+                taskService.saveTask(task);
+                return new ResponseEntity<>(task, HttpStatus.OK);
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This task is complete and cannot be modified !!!");
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You are not allowed to modify this task !!!");
+        }
+    }
+    
+    @PutMapping("/task/status")
+    public ResponseEntity<Task> editTaskStatus(HttpServletRequest request, @RequestBody TaskRequestEdit taskRequestEdit) {
+        String userId = tokenAuthenticationService.getUserByToken(request);
+        Task task = taskService.getTaskById(taskRequestEdit.getId());
+        Plan plan = planService.getPlanById(task.getPlan());
+        if (userId.equals(task.getUserId())) {
+            if (plan.isStatus() == false) {
+                task.setTaskStatus(taskRequestEdit.getTaskStatus());
                 taskService.saveTask(task);
                 return new ResponseEntity<>(task, HttpStatus.OK);
             } else {
