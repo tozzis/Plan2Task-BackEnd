@@ -10,10 +10,4 @@ COPY ./src /app/src
 
 RUN mvn clean package -DskipTests
 
-FROM openjdk:8-jdk-stretch
-
-WORKDIR /app
-
-COPY --from=build /app/target/*.jar /app
-
-CMD ["sh", "-c", "java -jar *.jar"]
+CMD ["sh", "-c", "java -jar /app/target/*.jar"]
