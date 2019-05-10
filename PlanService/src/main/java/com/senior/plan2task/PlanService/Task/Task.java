@@ -1,8 +1,7 @@
 package com.senior.plan2task.PlanService.Task;
 
 import com.senior.plan2task.PlanService.Model.Location;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,9 +17,7 @@ public class Task {
 
     private String detail;
 
-    private LocalDate date;
-    
-    private LocalTime time;
+    private Date dateTime;
 
     private Location location;
 
@@ -35,13 +32,12 @@ public class Task {
     public Task() {
     }
 
-    public Task(String id, int priority, String title, String detail, LocalDate date, LocalTime time, Location location, String userId, Boolean taskStatus, String picture, String plan) {
+    public Task(String id, int priority, String title, String detail, Date dateTime, Location location, String userId, Boolean taskStatus, String picture, String plan) {
         this.id = id;
         this.priority = priority;
         this.title = title;
         this.detail = detail;
-        this.date = date;
-        this.time = time;
+        this.dateTime = dateTime;
         this.location = location;
         this.userId = userId;
         this.taskStatus = taskStatus;
@@ -81,20 +77,12 @@ public class Task {
         this.detail = detail;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public Date getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public LocalTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
     }
 
     public Location getLocation() {
@@ -136,5 +124,5 @@ public class Task {
     public void setPlan(String plan) {
         this.plan = plan;
     }
-    
+
 }

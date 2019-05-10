@@ -53,7 +53,7 @@ public class TaskController {
         Plan plan = planService.getPlanById(taskRequest.getPlan());
         if(plan!=null && plan.getUserId().equals(userId)){
             List<Task> taskData = taskService.getTaskByPlan(plan.getId());
-            Task task = new Task( null, taskData.size()+1, taskRequest.getTitle(), taskRequest.getDetail(), taskRequest.getDate(), taskRequest.getTime(), taskRequest.getLocation(), userId, false, taskRequest.getPicture(), plan.getId());
+            Task task = new Task( null, taskData.size()+1, taskRequest.getTitle(), taskRequest.getDetail(), taskRequest.getDateTime(), taskRequest.getLocation(), userId, false, taskRequest.getPicture(), plan.getId());
             taskService.saveTask(task);
             return new ResponseEntity<>(task, HttpStatus.OK);
         } else {
@@ -70,8 +70,7 @@ public class TaskController {
             if (plan.isStatus() == false) {
                 task.setTitle(taskRequestEdit.getTitle());
                 task.setDetail(taskRequestEdit.getDetail());
-//                task.setDate(taskRequestEdit.getDate());
-//                task.setTime(taskRequestEdit.getTime());
+                task.setDateTime(taskRequestEdit.getDateTime());
 //                task.setLocation(taskRequestEdit.getLocation());
                 taskService.saveTask(task);
                 return new ResponseEntity<>(task, HttpStatus.OK);

@@ -1,7 +1,6 @@
 package com.senior.plan2task.PlanService.Model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.Date;
 
 public class TaskRequest {
     
@@ -10,10 +9,8 @@ public class TaskRequest {
     private String title;
 
     private String detail;
-
-    private LocalDate date;
     
-    private LocalTime time;
+    private Date dateTime;
 
     private Location location;
 
@@ -26,12 +23,11 @@ public class TaskRequest {
     public TaskRequest() {
     }
 
-    public TaskRequest(String id, String title, String detail, LocalDate date, LocalTime time, Location location, Boolean taskStatus, String picture, String plan) {
+    public TaskRequest(String id, String title, String detail, Date dateTime, Location location, Boolean taskStatus, String picture, String plan) {
         this.id = id;
         this.title = title;
         this.detail = detail;
-        this.date = date;
-        this.time = time;
+        this.dateTime = dateTime;
         this.location = location;
         this.taskStatus = taskStatus;
         this.picture = picture;
@@ -62,20 +58,12 @@ public class TaskRequest {
         this.detail = detail;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public Date getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public LocalTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
     }
 
     public Location getLocation() {
