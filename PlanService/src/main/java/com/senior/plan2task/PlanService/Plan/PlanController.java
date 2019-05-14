@@ -81,7 +81,7 @@ public class PlanController {
                     plan.setDetail(planRequestEdit.getDetail());
                     plan.setStartDate(planRequestEdit.getStartDate());
                     plan.setEndDate(planRequestEdit.getEndDate());
-                    plan.setLocation(planRequestEdit.getLocation());
+                   // plan.setLocation(planRequestEdit.getLocation());
                     plan.setType(planRequestEdit.getType());
                     plan.setStatus(planRequestEdit.isStatus());
                     planService.savePlan(plan);
