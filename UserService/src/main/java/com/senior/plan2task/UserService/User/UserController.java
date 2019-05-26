@@ -65,6 +65,23 @@ public class UserController {
         }
     }
     
+    @PostMapping("/user/update")
+    public ResponseEntity<User> updateUserFacebook(@RequestBody Map<String, String> tokenFacebook,HttpServletRequest request) {
+        FacebookAccount facebookAccount = authenFacebookAdapter.getFacebookAccount(tokenFacebook.get("tokenFacebook"));
+        String userId = tokenAuthenticationService.getUserByToken(request);
+        if(facebookAccount.getEmail()==null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "email not found !!!");
+        }else{
+            User user = userService.getUserById(userId);
+            user.setFirstName(facebookAccount.getFirstName());
+            user.setLastName(facebookAccount.getLastName());
+            user.setEmail(facebookAccount.getEmail());
+            user.setImage(facebookAccount.getPicture().getData().getUrl());
+            user.setSex(facebookAccount.getGender());
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+    }
+    
     @PostMapping("/user/id")
     public ResponseEntity<User> getUserById(@RequestBody Map<String, String> userId) {
         User user = userService.getUserById(userId.get("id"));
