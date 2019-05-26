@@ -78,6 +78,7 @@ public class UserController {
             user.setEmail(facebookAccount.getEmail());
             user.setImage(facebookAccount.getPicture().getData().getUrl());
             user.setSex(facebookAccount.getGender());
+            userService.createUser(user);
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
     }
