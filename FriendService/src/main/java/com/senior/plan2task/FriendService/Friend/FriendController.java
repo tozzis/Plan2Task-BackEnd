@@ -1,5 +1,7 @@
 package com.senior.plan2task.FriendService.Friend;
 
+import com.senior.plan2task.FriendService.Facebook.AuthenFacebookAdapter;
+import com.senior.plan2task.FriendService.Facebook.FacebookData;
 import com.senior.plan2task.FriendService.Filter.TokenAuthenticationService;
 import com.senior.plan2task.FriendService.User.User;
 import com.senior.plan2task.FriendService.User.UserAdapter;
@@ -27,6 +29,9 @@ public class FriendController {
     private UserAdapter userAdapter;
     
     @Autowired
+    private AuthenFacebookAdapter authenFacebookAdapter;
+    
+    @Autowired
     private FriendService friendService;
     
     @Autowired
@@ -45,6 +50,12 @@ public class FriendController {
         }else {
             return new ResponseEntity<>(null, HttpStatus.OK);
         }
+    }
+    
+    @GetMapping("/friends/facebook")
+    public ResponseEntity<FacebookData> getFriendFacebook(HttpServletRequest request) {
+        String tokenFacebook = request.getHeader("facebook");
+        return new ResponseEntity<>(authenFacebookAdapter.getFacebookDataFriend(tokenFacebook), HttpStatus.OK);
     }
     
     @PostMapping("/friend")
