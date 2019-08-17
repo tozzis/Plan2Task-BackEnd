@@ -21,7 +21,17 @@ public class UserAdapter {
         return user;
     }
     
-     public User getUserByEmail(HttpServletRequest request, String email){
+    public User getUserByFacebookId(HttpServletRequest request, long facebookId){
+        RestTemplate restTemplate = new RestTemplate();
+        String url = userService+"/user/facebookId";
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", request.getHeader("Authorization"));
+        HttpEntity<UserRequestFacebook> entity = new HttpEntity<>(new UserRequestFacebook(facebookId), headers);
+        User user = restTemplate.exchange(url, HttpMethod.POST, entity, User.class).getBody();
+        return user;
+    }
+    
+    public User getUserByEmail(HttpServletRequest request, String email){
         RestTemplate restTemplate = new RestTemplate();
         String url = userService+"/user/email";
         HttpHeaders headers = new HttpHeaders();
