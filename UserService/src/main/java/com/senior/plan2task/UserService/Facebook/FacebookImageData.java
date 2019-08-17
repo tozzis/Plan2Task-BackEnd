@@ -55,7 +55,5 @@ public class FacebookImageData {
     public String toString() {
         return "FacebookImageData{" + "url=" + url + ", height=" + height + ", width=" + width + ", is_silhouette=" + is_silhouette + '}';
     }
-
-    
-    
+ 
 }
