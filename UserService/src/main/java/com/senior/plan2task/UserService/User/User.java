@@ -11,6 +11,8 @@ public class User {
     @Id
     private String id;
     
+    private long facebookId;
+    
     @Email
     @Indexed(unique = true)
     private String email;
@@ -28,8 +30,9 @@ public class User {
     public User() {
     }
 
-    public User(String id, String email, String firstName, String lastName, String sex, String telNo, String image) {
+    public User(String id, long facebookId, String email, String firstName, String lastName, String sex, String telNo, String image) {
         this.id = id;
+        this.facebookId = facebookId;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -44,6 +47,14 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public long getFacebookId() {
+        return facebookId;
+    }
+
+    public void setFacebookId(long facebookId) {
+        this.facebookId = facebookId;
     }
 
     public String getEmail() {

@@ -18,6 +18,10 @@ public class UserService {
         return userRepository.findById(id).get();
     }
     
+    public User getUserByFacebookId(long facebookId){
+        return userRepository.findByFacebookId(facebookId);
+    }
+    
     public User getUserByEmail(String userEmail) {
         return userRepository.findByEmail(userEmail);
     }

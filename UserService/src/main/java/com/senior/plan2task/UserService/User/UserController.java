@@ -51,7 +51,7 @@ public class UserController {
             if(facebookAccount.getEmail()==null){
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "email not found !!!");
             }else{
-                User fb_create = new User(null, facebookAccount.getEmail(), facebookAccount.getFirstName(), facebookAccount.getLastName(), facebookAccount.getGender(), null, facebookAccount.getPicture().getData().getUrl());
+                User fb_create = new User(null, facebookAccount.getFacebookId(), facebookAccount.getEmail(), facebookAccount.getFirstName(), facebookAccount.getLastName(), facebookAccount.getGender(), null, facebookAccount.getPicture().getData().getUrl());
                 userService.createUser(fb_create);
                 User fb_sign = userService.getUserByEmail(facebookAccount.getEmail());
                 if (fb_sign != null) {
@@ -73,6 +73,7 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "email not found !!!");
         }else{
             User user = userService.getUserById(userId);
+            user.setFacebookId(facebookAccount.getFacebookId());
             user.setFirstName(facebookAccount.getFirstName());
             user.setLastName(facebookAccount.getLastName());
             user.setEmail(facebookAccount.getEmail());
@@ -86,6 +87,12 @@ public class UserController {
     @PostMapping("/user/id")
     public ResponseEntity<User> getUserById(@RequestBody Map<String, String> userId) {
         User user = userService.getUserById(userId.get("id"));
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+    
+    @PostMapping("/user/facebookId")
+    public ResponseEntity<User> getUserByFacebookId(@RequestBody long facebookId) {
+        User user = userService.getUserByFacebookId(facebookId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
     
