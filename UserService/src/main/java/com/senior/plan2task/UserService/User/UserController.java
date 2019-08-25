@@ -91,8 +91,8 @@ public class UserController {
     }
     
     @PostMapping("/user/facebookId")
-    public ResponseEntity<User> getUserByFacebookId(@RequestBody long facebookId) {
-        User user = userService.getUserByFacebookId(facebookId);
+    public ResponseEntity<User> getUserByFacebookId(@RequestBody Map<String, String> facebookId) {
+        User user = userService.getUserByFacebookId(Long.parseLong(facebookId.get("facebookId")));
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
     
