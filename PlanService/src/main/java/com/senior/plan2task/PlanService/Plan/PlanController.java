@@ -4,6 +4,8 @@ import com.senior.plan2task.PlanService.Filter.TokenAuthenticationService;
 import com.senior.plan2task.PlanService.Model.PlanRequestEdit;
 import com.senior.plan2task.PlanService.Model.PlanResponse;
 import com.senior.plan2task.PlanService.User.UserAdapter;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -52,6 +54,14 @@ public class PlanController {
     public ResponseEntity<List<Plan>> getPlanByLocaldateToday(HttpServletRequest request) {
         String userId = tokenAuthenticationService.getUserByToken(request);
         List<Plan> plan = planService.getPlanByLocaldateToday(userId);
+        return new ResponseEntity<>(plan, HttpStatus.OK);
+    }
+
+    @GetMapping ("/plans/startdate/{startdate}")
+    public ResponseEntity<List<Plan>> getPlanByStartdate(HttpServletRequest request, @PathVariable String startDate) {
+        String userId = tokenAuthenticationService.getUserByToken(request);
+        LocalDate startDateLocalDate = LocalDate.parse(startDate);
+        List<Plan> plan = planService.getPlayByStartdate(startDateLocalDate,userId);
         return new ResponseEntity<>(plan, HttpStatus.OK);
     }
     

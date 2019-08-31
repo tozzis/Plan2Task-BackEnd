@@ -18,6 +18,9 @@ public class PlanService {
     public List<Plan> getPlanByLocaldateToday(String userId){
         return planRepository.findPlanByStartDateLessThanEqualAndEndDateGreaterThanEqualAndUserId(LocalDate.now(), LocalDate.now(), userId);
     }
+    public List<Plan> getPlayByStartdate (LocalDate startDate,String userId){
+        return planRepository.findPlanByStartDateAndUserId(startDate,userId);
+    }
     
     public Plan getPlanById(String id){
         return planRepository.findById(id).get();
