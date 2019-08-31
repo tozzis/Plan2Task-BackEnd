@@ -57,7 +57,7 @@ public class PlanController {
         return new ResponseEntity<>(plan, HttpStatus.OK);
     }
 
-    @GetMapping ("/plans/startdate/{startdate}")
+    @GetMapping ("/plans/startdate/{startDate}")
     public ResponseEntity<List<Plan>> getPlanByStartdate(HttpServletRequest request, @PathVariable String startDate) {
         String userId = tokenAuthenticationService.getUserByToken(request);
         LocalDate startDateLocalDate = LocalDate.parse(startDate);
