@@ -61,7 +61,9 @@ public class PlanController {
     public ResponseEntity<List<Plan>> getPlanByStartdate(HttpServletRequest request, @PathVariable String startDate) {
         String userId = tokenAuthenticationService.getUserByToken(request);
         LocalDate startDateLocalDate = LocalDate.parse(startDate);
-        List<Plan> plan = planService.getPlayByStartdate(startDateLocalDate,userId);
+        System.out.println(userId);
+        System.out.println(startDateLocalDate);
+        List<Plan> plan = planService.getPlanByStartDate(startDateLocalDate, userId);
         return new ResponseEntity<>(plan, HttpStatus.OK);
     }
     
