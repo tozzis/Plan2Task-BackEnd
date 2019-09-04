@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 public class GlobalValue {
     
     public static String secretKey;
-    
     public static String userService;
 
     @Value("${authenservice.jwt.secret}")
