@@ -6,13 +6,23 @@ services:
     image: user_service
     ports: 
       - "3001:3001"
-  friend:
-    build: FriendService
-    image: friend_service
-    ports: 
-      - "3004:3004"
   plan:
     build: PlanService
     image: plan_service
     ports: 
       - "3002:3002"
+  group:
+    build: GroupService
+    image: group_service
+    ports: 
+      - "3003:3003"
+  friend:
+    build: FriendService
+    image: friend_service
+    ports: 
+      - "3004:3004"
+  file:
+    build: FileService
+    image: file_service
+    ports: 
+      - "3005:3005"
