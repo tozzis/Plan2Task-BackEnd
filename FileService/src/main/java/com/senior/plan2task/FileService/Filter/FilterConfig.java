@@ -12,7 +12,7 @@ public class FilterConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
-            .antMatchers(HttpMethod.GET , "/", "/file/{planId}/{fileName}", "/file/{planId}/{taskId}/{fileName}").permitAll()
+            .antMatchers(HttpMethod.GET , "/", "/file/{planId}/{fileName}", "/file/{planId}/{taskId}/{fileName}", "/files/{planId}/{taskId}/{fileName}").permitAll()
             .anyRequest().authenticated()
             .and()
             .addFilterBefore(
