@@ -1,29 +1,29 @@
-package com.senior.plan2task.GroupService.Group;
+package com.senior.plan2task.GroupService.Group.Model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.List;
 
-@Document(collection = "groups")
-public class Group {
+public class GroupResponse {
     
-    @Id
     private String id;
 
     private String groupName;
     
     private String groupImage;
+    
+    private List<Member> member;
 
-    public Group() {
+    public GroupResponse() {
     }
 
-    public Group(String id, String groupName, String groupImage) {
+    public GroupResponse(String id, String groupName, String groupImage, List<Member> member) {
         this.id = id;
         this.groupName = groupName;
         this.groupImage = groupImage;
+        this.member = member;
     }
 
     public String getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(String id) {
@@ -31,7 +31,7 @@ public class Group {
     }
 
     public String getGroupName() {
-        return this.groupName;
+        return groupName;
     }
 
     public void setGroupName(String groupName) {
@@ -39,11 +39,19 @@ public class Group {
     }
 
     public String getGroupImage() {
-        return this.groupImage;
+        return groupImage;
     }
 
     public void setGroupImage(String groupImage) {
         this.groupImage = groupImage;
     }
 
+    public List<Member> getMember() {
+        return member;
+    }
+
+    public void setMember(List<Member> member) {
+        this.member = member;
+    }
+    
 }

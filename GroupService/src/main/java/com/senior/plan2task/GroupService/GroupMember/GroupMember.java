@@ -8,22 +8,25 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class GroupMember {
     @Id
     private String id;
+    
     private String groupId;
-    private String groupPosition;
+    
+    private String position;
+    
     private String userId;
 
     public GroupMember() {
     }
 
-    public GroupMember(String id, String groupId, String groupPosition, String userId) {
+    public GroupMember(String id, String groupId, String position, String userId) {
         this.id = id;
         this.groupId = groupId;
-        this.groupPosition = groupPosition;
+        this.position = position;
         this.userId = userId;
     }
 
     public String getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(String id) {
@@ -31,33 +34,27 @@ public class GroupMember {
     }
 
     public String getGroupId() {
-        return this.groupId;
+        return groupId;
     }
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
     }
 
-    public String getGroupPosition() {
-        return this.groupPosition;
+    public String getPosition() {
+        return position;
     }
 
-    public void setGroupPosition(String groupPosition) {
-        this.groupPosition = groupPosition;
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public String getUserId() {
-        return this.userId;
+        return userId;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + " id='" + getId() + "'" + ", groupId='" + getGroupId() + "'" + ", groupPosition='"
-                + getGroupPosition() + "'" + ", userId='" + getUserId() + "'" + "}";
     }
 
 }

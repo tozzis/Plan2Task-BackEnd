@@ -1,9 +1,11 @@
-package com.senior.plan2task.GroupService.Model;
+package com.senior.plan2task.GroupService.Group.Model;
 
 import com.senior.plan2task.GroupService.User.User;
 
 public class Member {
+    
     private User user;
+    
     private String position;
 
     public Member() {
@@ -15,7 +17,7 @@ public class Member {
     }
 
     public User getUser() {
-        return this.user;
+        return user;
     }
 
     public void setUser(User user) {
@@ -23,18 +25,11 @@ public class Member {
     }
 
     public String getPosition() {
-        return this.position;
+        return position;
     }
 
     public void setPosition(String position) {
         this.position = position;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-            " user='" + getUser() + "'" +
-            ", position='" + getPosition() + "'" +
-            "}";
-    }
 }
