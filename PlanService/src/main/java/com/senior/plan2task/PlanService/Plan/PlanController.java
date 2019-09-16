@@ -42,12 +42,23 @@ public class PlanController {
        if(!plan.isEmpty()){
             List<PlanResponse> planResponses = new ArrayList<>();
             for (int i = 0; i < plan.size(); i++) {
-                planResponses.add(new PlanResponse(plan.get(i).getId(), plan.get(i).getTitle(), plan.get(i).getDetail(), plan.get(i).getStartDate(), plan.get(i).getEndDate(), plan.get(i).getLocation(), plan.get(i).getType(), plan.get(i).isStatus(), userAdapter.getUserById(request, plan.get(i).getUserId())));
+                planResponses.add(new PlanResponse(plan.get(i).getId(), plan.get(i).getTitle(), plan.get(i).getDetail(), plan.get(i).getStartDate(), plan.get(i).getEndDate(), plan.get(i).getLocation(), plan.get(i).getType(), plan.get(i).isStatus(), userAdapter.getUserById(request, plan.get(i).getUserId()), plan.get(i).getImage()));
             }
            return new ResponseEntity<>(planResponses, HttpStatus.OK);
        }else{
            return new ResponseEntity<>(null, HttpStatus.OK);
        }
+    }
+    
+    @GetMapping ("/plans/{id}")
+    public ResponseEntity<Plan> getPlanById(HttpServletRequest request, @PathVariable String id) {
+        String userId = tokenAuthenticationService.getUserByToken(request);
+        Plan plan = planService.getPlanById(id);
+        if(userId.equals(plan.getUserId())){
+            return new ResponseEntity<>(plan, HttpStatus.OK);
+        }else{
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This plan could not open !!!");
+        }
     }
 
     @GetMapping ("/plans/today")
@@ -61,8 +72,6 @@ public class PlanController {
     public ResponseEntity<List<Plan>> getPlanByStartdate(HttpServletRequest request, @PathVariable String startDate) {
         String userId = tokenAuthenticationService.getUserByToken(request);
         LocalDate startDateLocalDate = LocalDate.parse(startDate);
-        System.out.println(userId);
-        System.out.println(startDateLocalDate);
         List<Plan> plan = planService.getPlanByStartDate(startDateLocalDate, userId);
         return new ResponseEntity<>(plan, HttpStatus.OK);
     }
@@ -75,6 +84,7 @@ public class PlanController {
             String userId = tokenAuthenticationService.getUserByToken(request);
             plan.setUserId(userId);
             plan.setStatus(false);
+            plan.setImage("http://moneyhub.in.th/wp-content/uploads/2015/11/shutterstock_287274665.jpg");
             planService.savePlan(plan);
             return new ResponseEntity<>(plan, HttpStatus.OK);
         }

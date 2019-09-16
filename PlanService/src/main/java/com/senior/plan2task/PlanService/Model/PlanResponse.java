@@ -22,11 +22,13 @@ public class PlanResponse {
     private boolean status;
     
     private User user;
+    
+    private String image;
 
     public PlanResponse() {
     }
 
-    public PlanResponse(String id, String title, String detail, LocalDate startDate, LocalDate endDate, Location location, String type, boolean status, User user) {
+    public PlanResponse(String id, String title, String detail, LocalDate startDate, LocalDate endDate, Location location, String type, boolean status, User user, String image) {
         this.id = id;
         this.title = title;
         this.detail = detail;
@@ -36,6 +38,7 @@ public class PlanResponse {
         this.type = type;
         this.status = status;
         this.user = user;
+        this.image = image;
     }
 
     public String getId() {
@@ -108,6 +111,14 @@ public class PlanResponse {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
     
 }

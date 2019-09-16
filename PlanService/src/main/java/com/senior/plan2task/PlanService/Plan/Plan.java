@@ -27,10 +27,12 @@ public class Plan {
     
     private String userId;
     
+    private String image;
+    
     public Plan() {
     }
 
-    public Plan(String id, String title, String detail, LocalDate startDate, LocalDate endDate, Location location, String type, boolean status, String userId) {
+    public Plan(String id, String title, String detail, LocalDate startDate, LocalDate endDate, Location location, String type, boolean status, String userId, String image) {
         this.id = id;
         this.title = title;
         this.detail = detail;
@@ -40,6 +42,7 @@ public class Plan {
         this.type = type;
         this.status = status;
         this.userId = userId;
+        this.image = image;
     }
 
     public String getId() {
@@ -112,6 +115,14 @@ public class Plan {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
     
 }
