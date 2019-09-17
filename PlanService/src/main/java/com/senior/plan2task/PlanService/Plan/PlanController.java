@@ -49,17 +49,6 @@ public class PlanController {
            return new ResponseEntity<>(null, HttpStatus.OK);
        }
     }
-    
-    @GetMapping ("/plans/{id}")
-    public ResponseEntity<Plan> getPlanById(HttpServletRequest request, @PathVariable String id) {
-        String userId = tokenAuthenticationService.getUserByToken(request);
-        Plan plan = planService.getPlanById(id);
-        if(userId.equals(plan.getUserId())){
-            return new ResponseEntity<>(plan, HttpStatus.OK);
-        }else{
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This plan could not open !!!");
-        }
-    }
 
     @GetMapping ("/plans/today")
     public ResponseEntity<List<Plan>> getPlanByLocaldateToday(HttpServletRequest request) {
@@ -74,6 +63,17 @@ public class PlanController {
         LocalDate startDateLocalDate = LocalDate.parse(startDate);
         List<Plan> plan = planService.getPlanByStartDate(startDateLocalDate, userId);
         return new ResponseEntity<>(plan, HttpStatus.OK);
+    }
+    
+    @GetMapping ("/plan/{id}")
+    public ResponseEntity<Plan> getPlanById(HttpServletRequest request, @PathVariable String id) {
+        String userId = tokenAuthenticationService.getUserByToken(request);
+        Plan plan = planService.getPlanById(id);
+        if(userId.equals(plan.getUserId())){
+            return new ResponseEntity<>(plan, HttpStatus.OK);
+        }else{
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This plan could not open !!!");
+        }
     }
     
     @PostMapping ("/plan")
