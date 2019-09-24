@@ -10,6 +10,9 @@ public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
 
+    public List<Task> getTaskByUser(String id){
+        return taskRepository.findTaskByUserId(id);
+    }
     public Task getTaskById(String id) {
         return taskRepository.findById(id).get();
     }
