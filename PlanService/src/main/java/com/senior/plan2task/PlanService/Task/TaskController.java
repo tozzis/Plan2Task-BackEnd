@@ -53,7 +53,10 @@ public class TaskController {
                         task.get(i).getTitle(), task.get(i).getDetail(), task.get(i).getDateTime(),
                         task.get(i).getLocation(), task.get(i).getTaskStatus(), task.get(i).getPicture(),
                         planService.getPlanById(task.get(i).getPlan()),
-                        userAdapter.getUserById(request, task.get(i).getUserId())));
+                        userAdapter.getUserById(request, task.get(i).getUserId()),task.get(i).getPlan()
+                        )
+                        
+                        );
             }
             return new ResponseEntity<>(taskResponseUser, HttpStatus.OK);
         } else {
