@@ -105,6 +105,9 @@ public class PlanController {
                     plan.setEndDate(planRequestEdit.getEndDate());
                     plan.setType(planRequestEdit.getType());
                     plan.setStatus(planRequestEdit.isStatus());
+                    if(planRequestEdit.getLocation() != null){
+                        plan.setLocation(planRequestEdit.getLocation());
+                    }
                     planService.savePlan(plan);
                     return new ResponseEntity<>(plan, HttpStatus.OK);
                 }
