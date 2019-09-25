@@ -29,9 +29,12 @@ public class TaskResponseUser {
 
     private String planId;
 
+    private String userId;
+
+    private String type;
     
     public TaskResponseUser(String id,int priority ,String title, String detail, Date dateTime, Location location,
-            Boolean taskStatus, String picture, Plan plan, User user,String planId) {
+            Boolean taskStatus, String picture, Plan plan, User user,String planId,String userId,String type) {
         this.id = id;
         this.priority = priority;
         this.title = title;
@@ -43,6 +46,8 @@ public class TaskResponseUser {
         this.plan = plan;
         this.user = user;
         this.planId = planId;
+        this.userId = userId;
+        this.type = type;
     }
 
     public String getId() {
@@ -53,13 +58,26 @@ public class TaskResponseUser {
         this.id = id;
     }
 
-    
+    public String getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    } 
     public String getPlanId() {
         return this.planId;
     }
 
     public void setPlanId(String planId) {
         this.planId = planId;
+    }
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
     public int getPriority() {
         return this.priority;
