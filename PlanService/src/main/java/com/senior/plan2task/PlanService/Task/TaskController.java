@@ -85,7 +85,7 @@ public class TaskController {
             List<Task> taskData = taskService.getTaskByPlan(plan.getId());
             Task task = new Task(null, taskData.size() + 1, taskRequest.getTitle(), taskRequest.getDetail(),
                     taskRequest.getDateTime(), taskRequest.getLocation(), userId, false, taskRequest.getPicture(),
-                    plan.getId());
+                    plan.getId(),plan.getType());
             taskService.saveTask(task);
             return new ResponseEntity<>(task, HttpStatus.OK);
         } else {

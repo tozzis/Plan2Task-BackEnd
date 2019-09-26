@@ -29,10 +29,11 @@ public class Task {
 
     private String plan;
 
+    private String type;
     public Task() {
     }
 
-    public Task(String id, int priority, String title, String detail, Date dateTime, Location location, String userId, Boolean taskStatus, String picture, String plan) {
+    public Task(String id, int priority, String title, String detail, Date dateTime, Location location, String userId, Boolean taskStatus, String picture, String plan, String type) {
         this.id = id;
         this.priority = priority;
         this.title = title;
@@ -43,6 +44,7 @@ public class Task {
         this.taskStatus = taskStatus;
         this.picture = picture;
         this.plan = plan;
+        this.type = type;
     }
 
     public String getId() {
@@ -121,8 +123,15 @@ public class Task {
         return plan;
     }
 
-    public void setPlan(String plan) {
-        this.plan = plan;
+    public void setPlan(String type) {
+        this.type = type;
+    }
+    public String getType() {
+        return plan;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
 }
