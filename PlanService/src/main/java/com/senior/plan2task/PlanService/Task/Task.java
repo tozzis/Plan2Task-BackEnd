@@ -127,7 +127,7 @@ public class Task {
         this.type = type;
     }
     public String getType() {
-        return plan;
+        return type;
     }
 
     public void setType(String type) {
