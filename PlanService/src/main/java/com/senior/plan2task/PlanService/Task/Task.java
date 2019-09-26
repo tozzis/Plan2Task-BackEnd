@@ -123,8 +123,8 @@ public class Task {
         return plan;
     }
 
-    public void setPlan(String type) {
-        this.type = type;
+    public void setPlan(String plan) {
+        this.plan = plan;
     }
     public String getType() {
         return type;
