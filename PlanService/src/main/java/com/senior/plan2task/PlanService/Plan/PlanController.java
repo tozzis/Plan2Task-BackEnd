@@ -119,6 +119,19 @@ public class PlanController {
         }
     }
     
+    @PutMapping("/plan/image")
+    public ResponseEntity<Plan> editPlanImage(HttpServletRequest request, @RequestBody Plan planRequestEdit) {
+        String userId = tokenAuthenticationService.getUserByToken(request);
+        Plan plan = planService.getPlanById(planRequestEdit.getId());
+        if(userId.equals(plan.getUserId())){
+            plan.setImage(planRequestEdit.getImage());
+            planService.savePlan(plan);
+            return new ResponseEntity<>(plan, HttpStatus.OK);
+        }else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You are not allowed to modify this plan !!!");
+        }
+    }
+    
     @DeleteMapping("/plan/{id}")
     public ResponseEntity<Plan> deletePlan(HttpServletRequest request, @PathVariable String id) {
         String userId = tokenAuthenticationService.getUserByToken(request);
