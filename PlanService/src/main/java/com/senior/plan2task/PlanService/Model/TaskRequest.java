@@ -16,21 +16,18 @@ public class TaskRequest {
 
     private Boolean taskStatus;
 
-    private String picture;
-
     private String plan;
 
     public TaskRequest() {
     }
 
-    public TaskRequest(String id, String title, String detail, Date dateTime, Location location, Boolean taskStatus, String picture, String plan) {
+    public TaskRequest(String id, String title, String detail, Date dateTime, Location location, Boolean taskStatus, String plan) {
         this.id = id;
         this.title = title;
         this.detail = detail;
         this.dateTime = dateTime;
         this.location = location;
         this.taskStatus = taskStatus;
-        this.picture = picture;
         this.plan = plan;
     }
 
@@ -80,14 +77,6 @@ public class TaskRequest {
 
     public void setTaskStatus(Boolean taskStatus) {
         this.taskStatus = taskStatus;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
     }
 
     public String getPlan() {

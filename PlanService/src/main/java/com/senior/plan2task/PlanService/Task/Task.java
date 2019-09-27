@@ -25,15 +25,16 @@ public class Task {
 
     private Boolean taskStatus;
 
-    private String picture;
+    private String image;
 
     private String plan;
 
     private String type;
+    
     public Task() {
     }
 
-    public Task(String id, int priority, String title, String detail, Date dateTime, Location location, String userId, Boolean taskStatus, String picture, String plan, String type) {
+    public Task(String id, int priority, String title, String detail, Date dateTime, Location location, String userId, Boolean taskStatus, String image, String plan, String type) {
         this.id = id;
         this.priority = priority;
         this.title = title;
@@ -42,7 +43,7 @@ public class Task {
         this.location = location;
         this.userId = userId;
         this.taskStatus = taskStatus;
-        this.picture = picture;
+        this.image = image;
         this.plan = plan;
         this.type = type;
     }
@@ -111,12 +112,12 @@ public class Task {
         this.taskStatus = taskStatus;
     }
 
-    public String getPicture() {
-        return picture;
+    public String getImage() {
+        return image;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getPlan() {
@@ -126,6 +127,7 @@ public class Task {
     public void setPlan(String plan) {
         this.plan = plan;
     }
+
     public String getType() {
         return type;
     }

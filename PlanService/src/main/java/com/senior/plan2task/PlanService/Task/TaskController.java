@@ -50,13 +50,11 @@ public class TaskController {
             List<TaskResponseUser> taskResponseUser = new ArrayList<>();
             for (int i = 0; i < task.size(); i++) {
                 taskResponseUser.add(new TaskResponseUser(task.get(i).getId(), task.get(i).getPriority(),
-                        task.get(i).getTitle(), task.get(i).getDetail(), task.get(i).getDateTime(),
-                        task.get(i).getLocation(), task.get(i).getTaskStatus(), task.get(i).getPicture(),
-                        planService.getPlanById(task.get(i).getPlan()),
-                        userAdapter.getUserById(request, task.get(i).getUserId()),task.get(i).getPlan(),userId,planService.getPlanById(task.get(i).getPlan()).getType()
-                        )
-                        
-                        );
+                    task.get(i).getTitle(), task.get(i).getDetail(), task.get(i).getDateTime(),
+                    task.get(i).getLocation(), task.get(i).getTaskStatus(), task.get(i).getImage(),
+                    planService.getPlanById(task.get(i).getPlan()),
+                    userAdapter.getUserById(request, task.get(i).getUserId()),task.get(i).getPlan(),userId,planService.getPlanById(task.get(i).getPlan()).getType()
+                ));
             }
             return new ResponseEntity<>(taskResponseUser, HttpStatus.OK);
         } else {
@@ -84,8 +82,9 @@ public class TaskController {
         if (plan != null && plan.getUserId().equals(userId)) {
             List<Task> taskData = taskService.getTaskByPlan(plan.getId());
             Task task = new Task(null, taskData.size() + 1, taskRequest.getTitle(), taskRequest.getDetail(),
-                    taskRequest.getDateTime(), taskRequest.getLocation(), userId, false, taskRequest.getPicture(),
-                    plan.getId(),plan.getType());
+                taskRequest.getDateTime(), taskRequest.getLocation(), userId, false, "http://moneyhub.in.th/wp-content/uploads/2015/11/shutterstock_287274665.jpg",
+                plan.getId(),plan.getType()
+            );
             taskService.saveTask(task);
             return new ResponseEntity<>(task, HttpStatus.OK);
         } else {
@@ -104,7 +103,28 @@ public class TaskController {
                 task.setTitle(taskRequestEdit.getTitle());
                 task.setDetail(taskRequestEdit.getDetail());
                 task.setDateTime(taskRequestEdit.getDateTime());
-                // task.setLocation(taskRequestEdit.getLocation());
+                if(taskRequestEdit.getLocation() != null){
+                    task.setLocation(taskRequestEdit.getLocation());
+                }
+                taskService.saveTask(task);
+                return new ResponseEntity<>(task, HttpStatus.OK);
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "This task is complete and cannot be modified !!!");
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You are not allowed to modify this task !!!");
+        }
+    }
+    
+    @PutMapping("/task/image")
+    public ResponseEntity<Task> editTaskImage(HttpServletRequest request, @RequestBody Task taskRequestEdit) {
+        String userId = tokenAuthenticationService.getUserByToken(request);
+        Task task = taskService.getTaskById(taskRequestEdit.getId());
+        Plan plan = planService.getPlanById(task.getPlan());
+        if (userId.equals(task.getUserId())) {
+            if (plan.isStatus() == false) {
+                task.setImage(taskRequestEdit.getImage());
                 taskService.saveTask(task);
                 return new ResponseEntity<>(task, HttpStatus.OK);
             } else {
