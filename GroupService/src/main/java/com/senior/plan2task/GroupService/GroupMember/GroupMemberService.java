@@ -38,5 +38,9 @@ public class GroupMemberService {
         
     public void saveGroupMember(GroupMember groupMember){
         groupMemberRepository.save(groupMember);
-   }
+    }
+    
+    public void deleteGroupMember(String memberId) {
+        groupMemberRepository.deleteById(memberId);
+    }
 }
