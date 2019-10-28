@@ -23,8 +23,7 @@ jobs:
       - checkout
       - run: docker-compose down
       - run: docker image prune -f
-      - run: docker-compose build
-      - run: docker-compose up -d
+      - run: docker-compose up --build -d
   deploy:
     machine: true
     working_directory: ~/Plan2Task-BackEnd
@@ -38,10 +37,9 @@ jobs:
           command: |
             ssh $SSH_USER@$SSH_HOST  \
             '
-              cd /var/Plan2Task-BackEnd;
-              sudo docker-compose down;
-              sudo docker image prune -f;
-              sudo git pull;
-              sudo docker-compose build;
-              sudo docker-compose up -d;
+              cd /var/Plan2Task-BackEnd &&
+              sudo docker-compose down &&
+              sudo docker image prune -f &&
+              sudo git pull &&
+              sudo docker-compose up --build -d
             '
