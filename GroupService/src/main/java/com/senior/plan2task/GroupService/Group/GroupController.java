@@ -46,7 +46,6 @@ public class GroupController {
     @PostMapping("/group")
     public ResponseEntity<Group> createGroup(@Valid @RequestBody Group group, HttpServletRequest request) {
         String userId = tokenAuthenticationService.getUserByToken(request); 
-        group.setGroupImage("http://moneyhub.in.th/wp-content/uploads/2015/11/shutterstock_287274665.jpg");
         groupService.saveGroup(group);
         GroupMember groupMember = new GroupMember(null, group.getId(), "leader", userId);
         groupMemberService.saveGroupMember(groupMember);
