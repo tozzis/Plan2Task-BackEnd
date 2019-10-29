@@ -55,5 +55,11 @@ public class GroupService {
     public Group saveGroup(Group group) {
         return groupRepository.save(group);
     }
+    public void deleteGroupById(String id){
+        groupRepository.deleteById(id);
+    }
+    public Group getGroupByIdN(String id){
+        return groupRepository.findById(id).get();
+    }
 
 }

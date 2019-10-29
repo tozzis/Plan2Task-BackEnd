@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +50,21 @@ public class GroupController {
         groupService.saveGroup(group);
         GroupMember groupMember = new GroupMember(null, group.getId(), "leader", userId);
         groupMemberService.saveGroupMember(groupMember);
+        return new ResponseEntity<>(group, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/group/delete/{id}")
+    public ResponseEntity<Group> deleteGroup(HttpServletRequest request, @PathVariable String id) {
+        Group group = groupService.getGroupByIdN(id);
+
+        List<GroupMember> gm = groupMemberService.getGroupMemberByGroupId(id);
+        for(int i =0;i<gm.size();i++){
+            String groupMemberId = gm.get(i).getId();
+            groupMemberService.deleteGroupMember(groupMemberId);
+            System.out.println("Delete Gm id =+"+ groupMemberId+" successfully ");
+        }
+        groupService.deleteGroupById(id);
+        System.out.println("Delete Gm id =+"+ id+" successfully ");
         return new ResponseEntity<>(group, HttpStatus.OK);
     }
 
