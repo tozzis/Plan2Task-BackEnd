@@ -13,7 +13,7 @@ public class Group {
     
     private String groupImage;
 
-    public Group() {
+    public Group() { 
     }
 
     public Group(String id, String groupName, String groupImage) {
