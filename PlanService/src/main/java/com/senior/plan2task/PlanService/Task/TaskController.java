@@ -82,7 +82,7 @@ public class TaskController {
         if (plan != null && plan.getUserId().equals(userId)) {
             List<Task> taskData = taskService.getTaskByPlan(plan.getId());
             Task task = new Task(null, taskData.size() + 1, taskRequest.getTitle(), taskRequest.getDetail(),
-                taskRequest.getDateTime(), taskRequest.getLocation(), userId, false, "http://moneyhub.in.th/wp-content/uploads/2015/11/shutterstock_287274665.jpg",
+                taskRequest.getDateTime(), taskRequest.getLocation(), userId, false, "https://static.makeuseof.com/wp-content/uploads/2017/02/Shared-Task-List-Featured-670x335.jpg",
                 plan.getId(),plan.getType()
             );
             taskService.saveTask(task);

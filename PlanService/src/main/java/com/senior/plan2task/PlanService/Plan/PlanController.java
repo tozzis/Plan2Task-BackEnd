@@ -84,7 +84,7 @@ public class PlanController {
             String userId = tokenAuthenticationService.getUserByToken(request);
             plan.setUserId(userId);
             plan.setStatus(false);
-            plan.setImage("https://static.makeuseof.com/wp-content/uploads/2017/02/Shared-Task-List-Featured-670x335.jpg");
+            plan.setImage("https://cdn.lynda.com/course/186109/186109-636330511862047280-16x9.jpg");
             planService.savePlan(plan);
             return new ResponseEntity<>(plan, HttpStatus.OK);
         }
