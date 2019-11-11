@@ -84,7 +84,7 @@ public class PlanController {
             String userId = tokenAuthenticationService.getUserByToken(request);
             plan.setUserId(userId);
             plan.setStatus(false);
-            plan.setImage("http://moneyhub.in.th/wp-content/uploads/2015/11/shutterstock_287274665.jpg");
+            plan.setImage("https://static.makeuseof.com/wp-content/uploads/2017/02/Shared-Task-List-Featured-670x335.jpg");
             planService.savePlan(plan);
             return new ResponseEntity<>(plan, HttpStatus.OK);
         }
