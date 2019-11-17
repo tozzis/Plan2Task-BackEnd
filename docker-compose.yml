@@ -24,5 +24,7 @@ services:
   file:
     build: FileService
     image: file_service
+    volumes:
+      - ./FileService/uploads:/app/uploads
     ports: 
       - "3005:3005"

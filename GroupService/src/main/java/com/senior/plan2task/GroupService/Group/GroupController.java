@@ -62,23 +62,25 @@ public class GroupController {
         for(int i =0;i<gm.size();i++){
             String groupMemberId = gm.get(i).getId();
             groupMemberService.deleteGroupMember(groupMemberId);
-            System.out.println("Delete Gm id =+"+ groupMemberId+" successfully ");
         }
         groupService.deleteGroupById(id);
-        System.out.println("Delete Gm id =+"+ id+" successfully ");
         return new ResponseEntity<>(group, HttpStatus.OK);
     }
 
     @PutMapping("/group/update")
     public ResponseEntity<Group> editGroup(HttpServletRequest request, @RequestBody Group groupRequest) {
-
         Group group = groupService.getGroupByIdN(groupRequest.getId());
-
         group.setGroupName(groupRequest.getGroupName());
+        groupService.saveGroup(group);
+        return new ResponseEntity<>(group, HttpStatus.OK);
+    }
+    
+    @PutMapping("/group/update/image")
+    public ResponseEntity<Group> editGroupImagee(HttpServletRequest request, @RequestBody Group groupRequest) {
+        Group group = groupService.getGroupByIdN(groupRequest.getId());
         group.setGroupImage(groupRequest.getGroupImage());
         groupService.saveGroup(group);
         return new ResponseEntity<>(group, HttpStatus.OK);
-
     }
 
 }
